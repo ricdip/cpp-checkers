@@ -1,5 +1,4 @@
 #include "include/Queen.hpp"
-#include "include/Piece.hpp"
 #include "include/Game.hpp"
 
 Queen::Queen(bool color) : Piece(color) {

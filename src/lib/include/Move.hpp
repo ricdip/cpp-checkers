@@ -1,11 +1,14 @@
 #pragma once
+#include "Piece.hpp"
 #include <cstdint>
 #include <string>
+#include <vector>
 
 class Move {
     private:
         uint8_t originFile, originRank;
         uint8_t destinationFile, destinationRank;
+        std::vector<PieceLocation> captures;
     public:
         Move(uint8_t,uint8_t,uint8_t,uint8_t);
         Move(std::string);
@@ -13,6 +16,9 @@ class Move {
         uint8_t getOriginRank() const;
         uint8_t getDestinationFile() const;
         uint8_t getDestinationRank() const;
+
+        std::vector<PieceLocation> getCaptures();
+        void addCapture(PieceLocation);
 
         std::string repr() const;
 

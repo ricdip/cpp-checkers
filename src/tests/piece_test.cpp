@@ -29,3 +29,18 @@ TEST(PieceTest, representations) {
     EXPECT_EQ(Pawn(BLACK).repr(), BPAWN);
     EXPECT_EQ(Queen(BLACK).repr(), BQUEEN);
 }
+
+TEST(PieceTest, PieceLocation) {
+    PieceLocation p1 = PieceLocation{A, 1};
+    PieceLocation p2 = PieceLocation{B, 3};
+    PieceLocation p3 = PieceLocation{D, 5};
+
+    EXPECT_EQ(p1.file, A);
+    EXPECT_EQ(p1.rank, 1);
+
+    EXPECT_EQ(p2.file, B);
+    EXPECT_EQ(p2.rank, 3);
+
+    EXPECT_EQ(p3.file, D);
+    EXPECT_EQ(p3.rank, 5);
+}

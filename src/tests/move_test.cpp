@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <iterator>
 #include "../lib/include/Move.hpp"
 #include "../lib/include/Board.hpp"
 
@@ -7,7 +8,7 @@ TEST(MoveTest, attributes) {
     Move m2 = Move(C, 4, D, 5);
     Move m3 = Move("D3E4");
     Move m4 = Move("G5H6");
-    
+
     ASSERT_EQ(m1.getOriginFile(), A);
     ASSERT_EQ(m1.getOriginRank(), 1);
     ASSERT_EQ(m1.getDestinationFile(), B);
@@ -27,6 +28,29 @@ TEST(MoveTest, attributes) {
     ASSERT_EQ(m4.getOriginRank(), 5);
     ASSERT_EQ(m4.getDestinationFile(), H);
     ASSERT_EQ(m4.getDestinationRank(), 6);
+
+    m1.addCapture(PieceLocation{A, 1});
+    m1.addCapture(PieceLocation{B, 3});
+    m1.addCapture(PieceLocation{D, 5});
+
+    m2.addCapture(PieceLocation{H, 8});
+    
+    std::vector<PieceLocation> m1PieceLocations = m1.getCaptures();
+    std::vector<PieceLocation> m2PieceLocations = m2.getCaptures();
+
+    ASSERT_EQ(m1PieceLocations[0].file, A);
+    ASSERT_EQ(m1PieceLocations[0].rank, 1);
+
+    ASSERT_EQ(m1PieceLocations[1].file, B);
+    ASSERT_EQ(m1PieceLocations[1].rank, 3);
+
+    ASSERT_EQ(m1PieceLocations[2].file, D);
+    ASSERT_EQ(m1PieceLocations[2].rank, 5);
+
+    ASSERT_EQ(m2PieceLocations[0].file, H);
+    ASSERT_EQ(m2PieceLocations[0].rank, 8);
+
+    ASSERT_EQ(m3.getCaptures().size(), 0);
 }
 
 TEST(MoveTest, representations) {

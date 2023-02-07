@@ -2,8 +2,6 @@
 #include <cstdint>
 #include <iostream>
 #include "PieceType.hpp"
-#include "Move.hpp"
-#include <vector>
 
 #define WPAWN 'P'
 #define BPAWN 'p'
@@ -25,4 +23,9 @@ class Piece {
         virtual char repr() const = 0;
         // operator << overload
         friend std::ostream& operator<<(std::ostream&, const Piece&);
+};
+
+struct PieceLocation {
+    uint8_t file;
+    uint8_t rank;
 };
