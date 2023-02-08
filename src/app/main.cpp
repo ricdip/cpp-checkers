@@ -1,6 +1,4 @@
 #include "../lib/include/Game.hpp"
-#include <iostream>
-#include <vector>
 
 int main() {
   Board a = Board();

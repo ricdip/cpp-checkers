@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include <iterator>
 #include "../lib/include/Move.hpp"
 #include "../lib/include/Board.hpp"
 

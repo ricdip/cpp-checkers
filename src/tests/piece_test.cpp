@@ -1,7 +1,4 @@
 #include <gtest/gtest.h>
-#include "../lib/include/Piece.hpp"
-#include "../lib/include/Pawn.hpp"
-#include "../lib/include/Queen.hpp"
 #include "../lib/include/Game.hpp"
 
 TEST(PieceTest, attributes) {

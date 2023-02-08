@@ -1,8 +1,5 @@
 #include <gtest/gtest.h>
-#include "../lib/include/Pawn.hpp"
-#include "../lib/include/Queen.hpp"
 #include "../lib/include/Game.hpp"
-#include "../lib/include/Tile.hpp"
 
 TEST(TileTest, attributes) {
     EXPECT_EQ(Tile().isEmpty(), true);

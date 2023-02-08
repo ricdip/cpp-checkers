@@ -1,6 +1,5 @@
 #pragma once
 #include "Tile.hpp"
-#include <cstdint>
 
 #define COLS 8
 #define ROWS 8

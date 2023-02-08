@@ -1,9 +1,6 @@
 #include "include/Move.hpp"
 #include "include/Game.hpp"
-#include "include/Piece.hpp"
 #include <algorithm>
-#include <iterator>
-#include <stdexcept>
 
 Move::Move(uint8_t originFile,uint8_t originRank,uint8_t destinationFile,uint8_t destinationRank) : originFile(originFile), originRank(originRank), destinationFile(destinationFile), destinationRank(destinationRank), captures(std::vector<PieceLocation>()){}
 

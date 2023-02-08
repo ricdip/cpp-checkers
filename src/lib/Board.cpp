@@ -1,8 +1,5 @@
 #include "include/Board.hpp"
 #include "include/Game.hpp"
-#include "include/Pawn.hpp"
-#include <cstdint>
-#include <stdexcept>
 
 Board::Board() {
     initBoard();

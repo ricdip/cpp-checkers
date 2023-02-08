@@ -1,6 +1,4 @@
 #pragma once
-#include <cstdint>
-#include <vector>
 #include "Pawn.hpp"
 #include "Queen.hpp"
 #include "Board.hpp"
@@ -16,10 +14,10 @@ class Game {
         std::vector<Move> getPawnMoves(const Board&, const Pawn&, const uint8_t, const uint8_t);
         std::vector<Move> getQueenMoves(const Board&, const Queen&, const uint8_t, const uint8_t);
 
-        void appendForwardMoves(const Board&, const Piece&, const uint8_t, const uint8_t, std::vector<Move>&);
-        void appendBackMoves(const Board&, const Piece&, const uint8_t, const uint8_t, std::vector<Move>&);
-        PieceLocation forwardCaptures(const Board&, const Piece&, const uint8_t, const uint8_t, std::vector<PieceLocation>&);
-        PieceLocation backCaptures(const Board&, const Piece&, const uint8_t, const uint8_t, std::vector<PieceLocation>&);
+        void appendForwardMoves(const Board&, const bool, const uint8_t, const uint8_t, std::vector<Move>&);
+        void appendBackMoves(const Board&, const bool, const uint8_t, const uint8_t, std::vector<Move>&);
+        PieceLocation forwardCaptures(const Board&, const bool, const uint8_t, const uint8_t, std::vector<PieceLocation>&);
+        PieceLocation backCaptures(const Board&, const bool, const uint8_t, const uint8_t, std::vector<PieceLocation>&);
     public:
         std::vector<Move> getPieceMoves(const Board&, const uint8_t, const uint8_t);
 };
