@@ -5,9 +5,9 @@ TEST(BoardTest, operators) {
     Board board = Board();
 
     ASSERT_EQ(board(A, 1).repr(), ' ');
-    ASSERT_EQ(board(B, 1).repr(), 'P');
+    ASSERT_EQ(board(B, 1).repr(), 'p');
     ASSERT_EQ(board(G, 7).repr(), ' ');
-    ASSERT_EQ(board(H, 7).repr(), 'p');
+    ASSERT_EQ(board(H, 7).repr(), 'P');
 
     EXPECT_THROW(board(A, 9), std::runtime_error);
     EXPECT_THROW(board(A, 10), std::runtime_error);

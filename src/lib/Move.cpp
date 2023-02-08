@@ -49,6 +49,10 @@ void Move::addCapture(PieceLocation pieceLocation) {
     captures.push_back(pieceLocation);
 }
 
+void Move::addCaptures(std::vector<PieceLocation> pieceLocations) {
+    captures = pieceLocations;
+}
+
 std::string Move::repr() const {
     std::string moveString = {FILES_REPRESENTATION[getOriginFile()], RANKS_REPRESENTATION[getOriginRank()], FILES_REPRESENTATION[getDestinationFile()], RANKS_REPRESENTATION[getDestinationRank()]};
 

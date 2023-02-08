@@ -19,6 +19,7 @@ class Move {
 
         std::vector<PieceLocation> getCaptures();
         void addCapture(PieceLocation);
+        void addCaptures(std::vector<PieceLocation>);
 
         std::string repr() const;
 

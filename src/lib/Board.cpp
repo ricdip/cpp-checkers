@@ -9,37 +9,37 @@ Board::Board() {
 }
 
 void Board::initBoard() {
-    // white
-    // Board::operator() = new Pawn()
-    (*this)(B,1) = new Pawn(WHITE);
-    (*this)(D,1) = new Pawn(WHITE);
-    (*this)(F,1) = new Pawn(WHITE);
-    (*this)(H,1) = new Pawn(WHITE);
-             
-    (*this)(A,2) = new Pawn(WHITE);
-    (*this)(C,2) = new Pawn(WHITE);
-    (*this)(E,2) = new Pawn(WHITE);
-    (*this)(G,2) = new Pawn(WHITE);
-               
-    (*this)(B,3) = new Pawn(WHITE);
-    (*this)(D,3) = new Pawn(WHITE);
-    (*this)(F,3) = new Pawn(WHITE);
-    (*this)(H,3) = new Pawn(WHITE);
     // black
-    (*this)(A,6) = new Pawn(BLACK);
-    (*this)(C,6) = new Pawn(BLACK);
-    (*this)(E,6) = new Pawn(BLACK);
-    (*this)(G,6) = new Pawn(BLACK);
+    // Board::operator() = new Pawn()
+    (*this)(B,1) = new Pawn(BLACK);
+    (*this)(D,1) = new Pawn(BLACK);
+    (*this)(F,1) = new Pawn(BLACK);
+    (*this)(H,1) = new Pawn(BLACK);
+             
+    (*this)(A,2) = new Pawn(BLACK);
+    (*this)(C,2) = new Pawn(BLACK);
+    (*this)(E,2) = new Pawn(BLACK);
+    (*this)(G,2) = new Pawn(BLACK);
+               
+    (*this)(B,3) = new Pawn(BLACK);
+    (*this)(D,3) = new Pawn(BLACK);
+    (*this)(F,3) = new Pawn(BLACK);
+    (*this)(H,3) = new Pawn(BLACK);
+    // white
+    (*this)(A,6) = new Pawn(WHITE);
+    (*this)(C,6) = new Pawn(WHITE);
+    (*this)(E,6) = new Pawn(WHITE);
+    (*this)(G,6) = new Pawn(WHITE);
             
-    (*this)(B,7) = new Pawn(BLACK);
-    (*this)(D,7) = new Pawn(BLACK);
-    (*this)(F,7) = new Pawn(BLACK);
-    (*this)(H,7) = new Pawn(BLACK);
+    (*this)(B,7) = new Pawn(WHITE);
+    (*this)(D,7) = new Pawn(WHITE);
+    (*this)(F,7) = new Pawn(WHITE);
+    (*this)(H,7) = new Pawn(WHITE);
                 
-    (*this)(A,8) = new Pawn(BLACK);
-    (*this)(C,8) = new Pawn(BLACK);
-    (*this)(E,8) = new Pawn(BLACK);
-    (*this)(G,8) = new Pawn(BLACK);
+    (*this)(A,8) = new Pawn(WHITE);
+    (*this)(C,8) = new Pawn(WHITE);
+    (*this)(E,8) = new Pawn(WHITE);
+    (*this)(G,8) = new Pawn(WHITE);
 }
 
 bool Board::checkPositionInBound(uint8_t file, uint8_t rank) const {
