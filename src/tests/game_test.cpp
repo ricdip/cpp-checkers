@@ -74,6 +74,42 @@ TEST(GameTest, whitePawnMovesWithCapture) {
     std::vector<Move> oneRightCaptureMoves = game.getPieceMoves(boardOneRightCaptureMove, D, 5);
     ASSERT_EQ(oneRightCaptureMoves.size(), 1);
     ASSERT_EQ(std::find(oneRightCaptureMoves.begin(), oneRightCaptureMoves.end(), oneRightCaptureMoveResult) != oneRightCaptureMoves.end(), true);
+
+    Board boardTwoRightCaptureMove = Board(true);
+    boardTwoRightCaptureMove(B, 7) = new Pawn(WHITE);
+    boardTwoRightCaptureMove(A, 6) = new Pawn(WHITE);
+    boardTwoRightCaptureMove(C, 6) = new Pawn(BLACK);
+    boardTwoRightCaptureMove(E, 4) = new Pawn(BLACK);
+    Move twoRightCaptureMoveResult = Move("B7F3");
+    twoRightCaptureMoveResult.addCapture(PieceLocation{C, 6});
+    twoRightCaptureMoveResult.addCapture(PieceLocation{E, 4});
+    std::vector<Move> twoRightCaptureMoves = game.getPieceMoves(boardTwoRightCaptureMove, B, 7);
+    ASSERT_EQ(twoRightCaptureMoves.size(), 1);
+    ASSERT_EQ(std::find(twoRightCaptureMoves.begin(), twoRightCaptureMoves.end(), twoRightCaptureMoveResult) != twoRightCaptureMoves.end(), true);
+
+    Board boardOneLeftOneRightCaptureMove = Board(true);
+    boardOneLeftOneRightCaptureMove(D, 7) = new Pawn(WHITE);
+    boardOneLeftOneRightCaptureMove(C, 6) = new Pawn(BLACK);
+    boardOneLeftOneRightCaptureMove(E, 6) = new Pawn(WHITE);
+    boardOneLeftOneRightCaptureMove(C, 4) = new Pawn(BLACK);
+    Move oneLeftOneRightCaptureMoveResult = Move("D7D3");
+    oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 6});
+    oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 4});
+    std::vector<Move> oneLeftOneRightCaptureMoves = game.getPieceMoves(boardOneLeftOneRightCaptureMove, D, 7);
+    ASSERT_EQ(oneLeftOneRightCaptureMoves.size(), 1);
+    ASSERT_EQ(std::find(oneLeftOneRightCaptureMoves.begin(), oneLeftOneRightCaptureMoves.end(), oneLeftOneRightCaptureMoveResult) != oneLeftOneRightCaptureMoves.end(), true);
+
+    Board boardOneRightOneLeftCaptureMove = Board(true);
+    boardOneRightOneLeftCaptureMove(D, 7) = new Pawn(WHITE);
+    boardOneRightOneLeftCaptureMove(C, 6) = new Pawn(WHITE);
+    boardOneRightOneLeftCaptureMove(E, 6) = new Pawn(BLACK);
+    boardOneRightOneLeftCaptureMove(E, 4) = new Pawn(BLACK);
+    Move oneRightOneLeftCaptureMoveResult = Move("D7D3");
+    oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 6});
+    oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 4});
+    std::vector<Move> oneRightOneLeftCaptureMoves = game.getPieceMoves(boardOneRightOneLeftCaptureMove, D, 7);
+    ASSERT_EQ(oneRightOneLeftCaptureMoves.size(), 1);
+    ASSERT_EQ(std::find(oneRightOneLeftCaptureMoves.begin(), oneRightOneLeftCaptureMoves.end(), oneRightOneLeftCaptureMoveResult) != oneRightOneLeftCaptureMoves.end(), true);
 }
 
 TEST(GameTest, blackPawnMovesWithoutCapture) {
