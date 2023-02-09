@@ -1,6 +1,5 @@
 #include "include/Game.hpp"
 
-// TODO: missing tests
 std::vector<Move> Game::getPieceMoves(const Board& board, const uint8_t file, const uint8_t rank) {
     Piece &piece = board(file, rank).getPiece();
     if(piece.getType() == PieceType::PAWN) {

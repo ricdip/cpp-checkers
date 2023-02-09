@@ -64,3 +64,22 @@ TEST(MoveTest, representations) {
     ASSERT_STREQ(m3.repr().c_str(), "D3E4");
     ASSERT_STREQ(m4.repr().c_str(), "G5H6");
 }
+
+TEST(MoveTest, operations) {
+    Move m1 = Move(A, 1, B, 2);
+    Move m2 = Move(C, 4, D, 5);
+    Move m3 = Move("A1B2");
+    Move m4 = Move("C4D5");
+    Move m5 = Move("D3E4");
+    Move m6 = Move("G5H6");
+    Move m7 = Move("D3E4");
+    Move m8 = Move(H, 3, D, 5);
+
+    ASSERT_EQ(m1, m3);
+    ASSERT_EQ(m2, m4);
+    ASSERT_EQ(m5, m7);
+
+    ASSERT_NE(m1, m2);
+    ASSERT_NE(m6, m8);
+    ASSERT_NE(m1, m5);
+}

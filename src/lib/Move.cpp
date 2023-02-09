@@ -60,3 +60,15 @@ std::ostream& operator<<(std::ostream& os, const Move& m){
     os << m.repr();
     return os;
 }
+
+
+bool Move::operator==(const Move& m) const {
+    return (originFile == m.originFile) &&
+    (originRank == m.originRank) &&
+    (destinationFile == m.destinationFile) &&
+    (destinationRank == m.destinationRank);
+}
+
+bool Move::operator!=(const Move& m) const {
+    return !(*this == m);
+}

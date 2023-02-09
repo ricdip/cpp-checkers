@@ -22,4 +22,6 @@ class Move {
         std::string repr() const;
 
         friend std::ostream& operator<<(std::ostream&, const Move&);
+        bool operator==(const Move&) const;
+        bool operator!=(const Move&) const;
 };
