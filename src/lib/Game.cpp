@@ -1,6 +1,10 @@
 #include "include/Game.hpp"
 
 std::vector<Move> Game::getPieceMoves(const Board& board, const uint8_t file, const uint8_t rank) const {
+    if(board(file, rank).isEmpty()) {
+        return std::vector<Move>();
+    }
+
     Piece &piece = board(file, rank).getPiece();
     if(piece.getType() == PieceType::PAWN) {
         return getPawnMoves(board, dynamic_cast<Pawn&>(piece), file, rank);
@@ -66,7 +70,7 @@ void Game::appendForwardMoves(const Board& board, const bool pieceColor, const u
     // can capture up-left
     uint8_t upLeftAfterStepFile = file - 2;
     uint8_t upLeftAfterStepRank = rank - 2;
-    if(board.checkPositionInBound(upLeftFile, upLeftRank) && (!board(upLeftFile, upLeftRank).isEmpty()) && (board(upLeftFile, upLeftRank).getPiece().getColor() == !pieceColor) && board(upLeftAfterStepFile, upLeftAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(upLeftFile, upLeftRank) && (!board(upLeftFile, upLeftRank).isEmpty()) && (board(upLeftFile, upLeftRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(upLeftAfterStepFile, upLeftAfterStepRank) && board(upLeftAfterStepFile, upLeftAfterStepRank).isEmpty()) {
         std::vector<PieceLocation> captures = std::vector<PieceLocation>();
         PieceLocation finalLocation = Game::forwardCaptures(board, pieceColor, file, rank, captures);
         Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
@@ -77,7 +81,7 @@ void Game::appendForwardMoves(const Board& board, const bool pieceColor, const u
     // can capture up-right
     uint8_t upRightAfterStepFile = file + 2;
     uint8_t upRightAfterStepRank = rank - 2;
-    if(board.checkPositionInBound(upRightFile, upRightRank) && (!board(upRightFile, upRightRank).isEmpty()) && (board(upRightFile, upRightRank).getPiece().getColor() == !pieceColor) && board(upRightAfterStepFile, upRightAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(upRightFile, upRightRank) && (!board(upRightFile, upRightRank).isEmpty()) && (board(upRightFile, upRightRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(upRightAfterStepFile, upRightAfterStepRank) && board(upRightAfterStepFile, upRightAfterStepRank).isEmpty()) {
         std::vector<PieceLocation> captures = std::vector<PieceLocation>();
         PieceLocation finalLocation = Game::forwardCaptures(board, pieceColor, file, rank, captures);
         Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
@@ -106,7 +110,7 @@ void Game::appendBackMoves(const Board& board, const bool pieceColor, const uint
     // can capture down-left
     uint8_t downLeftAfterStepFile = file - 2;
     uint8_t downLeftAfterStepRank = rank + 2;
-    if(board.checkPositionInBound(downLeftFile, downLeftRank) && (!board(downLeftFile, downLeftRank).isEmpty()) && (board(downLeftFile, downLeftRank).getPiece().getColor() == !pieceColor) && board(downLeftAfterStepFile, downLeftAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(downLeftFile, downLeftRank) && (!board(downLeftFile, downLeftRank).isEmpty()) && (board(downLeftFile, downLeftRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(downLeftAfterStepFile, downLeftAfterStepRank) && board(downLeftAfterStepFile, downLeftAfterStepRank).isEmpty()) {
         std::vector<PieceLocation> captures = std::vector<PieceLocation>();
         PieceLocation finalLocation = Game::backCaptures(board, pieceColor, file, rank, captures);
         Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
@@ -117,7 +121,7 @@ void Game::appendBackMoves(const Board& board, const bool pieceColor, const uint
     // can capture down-right
     uint8_t downRightAfterStepFile = file + 2;
     uint8_t downRightAfterStepRank = rank + 2;
-    if(board.checkPositionInBound(downRightFile, downRightRank) && (!board(downRightFile, downRightRank).isEmpty()) && (board(downRightFile, downRightRank).getPiece().getColor() == !pieceColor) && board(downRightAfterStepFile, downRightAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(downRightFile, downRightRank) && (!board(downRightFile, downRightRank).isEmpty()) && (board(downRightFile, downRightRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(downRightAfterStepFile, downRightAfterStepRank) && board(downRightAfterStepFile, downRightAfterStepRank).isEmpty()) {
         std::vector<PieceLocation> captures = std::vector<PieceLocation>();
         PieceLocation finalLocation = Game::backCaptures(board, pieceColor, file, rank, captures);
         Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
@@ -135,12 +139,12 @@ PieceLocation Game::forwardCaptures(const Board& board, const bool pieceColor, c
     uint8_t upLeftAfterStepRank = rank - 2;
     uint8_t upRightAfterStepFile = file + 2;
     uint8_t upRightAfterStepRank = rank - 2;
-    if(board.checkPositionInBound(upLeftFile, upLeftRank) && (!board(upLeftFile, upLeftRank).isEmpty()) && (board(upLeftFile, upLeftRank).getPiece().getColor() == !pieceColor) && board(upLeftAfterStepFile, upLeftAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(upLeftFile, upLeftRank) && (!board(upLeftFile, upLeftRank).isEmpty()) && (board(upLeftFile, upLeftRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(upLeftAfterStepFile, upLeftAfterStepRank) && board(upLeftAfterStepFile, upLeftAfterStepRank).isEmpty()) {
         // can capture up-left
         capturesLocations.push_back(PieceLocation{upLeftFile, upLeftRank});
         return Game::forwardCaptures(board, pieceColor, upLeftAfterStepFile, upLeftAfterStepRank, capturesLocations);
 
-    } else if(board.checkPositionInBound(upRightFile, upRightRank) && (!board(upRightFile, upRightRank).isEmpty()) && (board(upRightFile, upRightRank).getPiece().getColor() == !pieceColor) && board(upRightAfterStepFile, upRightAfterStepRank).isEmpty()) {
+    } else if(board.checkPositionInBound(upRightFile, upRightRank) && (!board(upRightFile, upRightRank).isEmpty()) && (board(upRightFile, upRightRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(upRightAfterStepFile, upRightAfterStepRank) && board(upRightAfterStepFile, upRightAfterStepRank).isEmpty()) {
         // can capture up-right
         capturesLocations.push_back(PieceLocation{upRightFile, upRightRank});
         return Game::forwardCaptures(board, pieceColor, upRightAfterStepFile, upRightAfterStepRank, capturesLocations);
@@ -160,12 +164,12 @@ PieceLocation Game::backCaptures(const Board& board, const bool pieceColor, cons
     uint8_t downLeftAfterStepRank = rank + 2;
     uint8_t downRightAfterStepFile = file + 2;
     uint8_t downRightAfterStepRank = rank + 2;
-    if(board.checkPositionInBound(downLeftFile, downLeftRank) && (!board(downLeftFile, downLeftRank).isEmpty()) && (board(downLeftFile, downLeftRank).getPiece().getColor() == !pieceColor) && board(downLeftAfterStepFile, downLeftAfterStepRank).isEmpty()) {
+    if(board.checkPositionInBound(downLeftFile, downLeftRank) && (!board(downLeftFile, downLeftRank).isEmpty()) && (board(downLeftFile, downLeftRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(downLeftAfterStepFile, downLeftAfterStepRank) && board(downLeftAfterStepFile, downLeftAfterStepRank).isEmpty()) {
         // can capture down-left
         capturesLocations.push_back(PieceLocation{downLeftFile, downLeftRank});
         return Game::backCaptures(board, pieceColor, downLeftAfterStepFile, downLeftAfterStepRank, capturesLocations);
 
-    } else if(board.checkPositionInBound(downRightFile, downRightRank) && (!board(downRightFile, downRightRank).isEmpty()) && (board(downRightFile, downRightRank).getPiece().getColor() == !pieceColor) && board(downRightAfterStepFile, downRightAfterStepRank).isEmpty()) {
+    } else if(board.checkPositionInBound(downRightFile, downRightRank) && (!board(downRightFile, downRightRank).isEmpty()) && (board(downRightFile, downRightRank).getPiece().getColor() == !pieceColor) && board.checkPositionInBound(downRightAfterStepFile, downRightAfterStepRank) && board(downRightAfterStepFile, downRightAfterStepRank).isEmpty()) {
         // can capture down-right
         capturesLocations.push_back(PieceLocation{downRightFile, downRightRank});
         return Game::backCaptures(board, pieceColor, downRightAfterStepFile, downRightAfterStepRank, capturesLocations);
