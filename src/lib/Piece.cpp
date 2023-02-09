@@ -14,3 +14,11 @@ std::ostream& operator<<(std::ostream& os, const Piece& p) {
     os << p.repr();
     return os;
 }
+
+bool PieceLocation::operator==(const PieceLocation& pieceLocation) const {
+    return (file == pieceLocation.file) && (rank == pieceLocation.rank);
+}
+
+bool PieceLocation::operator!=(const PieceLocation& pieceLocation) const {
+    return !(*this == pieceLocation);
+}

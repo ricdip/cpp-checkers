@@ -11,6 +11,13 @@ int main() {
   }
   std::cout << std::endl;
 
+  Board custom = Board(true);
+  std::cout << custom << "\n\n";
+  custom(G, 1) = new Pawn(WHITE);
+  custom(D, 5) = new Pawn(BLACK);
+  std::cout << custom << "\n\n";
+
+
   std::cout << "Hello World!" << std::endl;
   return 0;
 }

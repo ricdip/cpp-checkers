@@ -11,13 +11,16 @@ Move::Move(std::string moveString) {
     const char *destRank = std::find(std::begin(RANKS_REPRESENTATION), std::end(RANKS_REPRESENTATION), moveString[3]);
 
     if(moveString.size() != 4 || origFile == std::end(FILES_REPRESENTATION) || origRank == std::end(RANKS_REPRESENTATION) || destFile == std::end(FILES_REPRESENTATION) || destRank == std::end(RANKS_REPRESENTATION)) {
-        throw std::runtime_error("Illegal move string");
+        std::string errString = "Illegal move string: (";
+        errString += moveString;
+        errString += ")";
+        throw std::runtime_error(errString);
     }
 
-    originFile = std::distance(FILES_REPRESENTATION, origFile);
-    originRank = std::distance(RANKS_REPRESENTATION, origRank);
-    destinationFile = std::distance(FILES_REPRESENTATION, destFile);
-    destinationRank = std::distance(RANKS_REPRESENTATION, destRank);
+    originFile = std::distance(FILES_REPRESENTATION, origFile) + 1;
+    originRank = std::distance(RANKS_REPRESENTATION, origRank) + 1;
+    destinationFile = std::distance(FILES_REPRESENTATION, destFile) + 1;
+    destinationRank = std::distance(RANKS_REPRESENTATION, destRank) + 1;
     captures = std::vector<PieceLocation>();
 }
 
@@ -51,7 +54,7 @@ void Move::addCaptures(std::vector<PieceLocation> pieceLocations) {
 }
 
 std::string Move::repr() const {
-    std::string moveString = {FILES_REPRESENTATION[getOriginFile()], RANKS_REPRESENTATION[getOriginRank()], FILES_REPRESENTATION[getDestinationFile()], RANKS_REPRESENTATION[getDestinationRank()]};
+    std::string moveString = {FILES_REPRESENTATION[getOriginFile() - 1], RANKS_REPRESENTATION[getOriginRank() - 1], FILES_REPRESENTATION[getDestinationFile() - 1], RANKS_REPRESENTATION[getDestinationRank() - 1]};
 
     return moveString;
 }
@@ -66,7 +69,8 @@ bool Move::operator==(const Move& m) const {
     return (originFile == m.originFile) &&
     (originRank == m.originRank) &&
     (destinationFile == m.destinationFile) &&
-    (destinationRank == m.destinationRank);
+    (destinationRank == m.destinationRank) &&
+    (captures == m.captures);
 }
 
 bool Move::operator!=(const Move& m) const {

@@ -27,4 +27,7 @@ class Piece {
 struct PieceLocation {
     uint8_t file;
     uint8_t rank;
+    
+    bool operator==(const PieceLocation&) const;
+    bool operator!=(const PieceLocation&) const;
 };
