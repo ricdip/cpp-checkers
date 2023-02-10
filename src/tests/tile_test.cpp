@@ -1,5 +1,7 @@
-#include "../lib/include/Game.hpp"
+// clang-format off
 #include <gtest/gtest.h>
+// clang-format on
+#include "../lib/include/Game.hpp"
 
 TEST(TileTest, attributes) {
   EXPECT_EQ(Tile().isEmpty(), true);

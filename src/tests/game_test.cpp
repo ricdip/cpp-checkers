@@ -1,6 +1,8 @@
+// clang-format off
+#include <gtest/gtest.h>
+// clang-format on
 #include "../lib/include/Game.hpp"
 #include <algorithm>
-#include <gtest/gtest.h>
 #include <vector>
 
 // TODO: missing tests
