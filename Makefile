@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := all
 
+# main
 # build release version of checkers
 .PHONY: build_release_test
 build_release_test: clean build_cmake_release_test build_make
@@ -16,10 +17,12 @@ build_release: clean build_cmake_release build_make
 .PHONY: build_debug
 build_debug: clean build_cmake_debug build_make
 
+# cmake build rules
 # launch CMake with build type Release and tests
 .ONESHELL:
 .PHONY: build_cmake_release_test
 build_cmake_release_test:
+	if [ ! -d "build" ]; then mkdir "build"; fi
 	cd build
 	cmake -DCMAKE_BUILD_TYPE=Release -D_TESTS=ON ..
 
@@ -27,6 +30,7 @@ build_cmake_release_test:
 .ONESHELL:
 .PHONY: build_cmake_debug_test
 build_cmake_debug_test:
+	if [ ! -d "build" ]; then mkdir "build"; fi
 	cd build
 	cmake -DCMAKE_BUILD_TYPE=Debug -D_TESTS=ON ..
 
@@ -34,6 +38,7 @@ build_cmake_debug_test:
 .ONESHELL:
 .PHONY: build_cmake_release
 build_cmake_release:
+	if [ ! -d "build" ]; then mkdir "build"; fi
 	cd build
 	cmake -DCMAKE_BUILD_TYPE=Release ..
 
@@ -41,9 +46,11 @@ build_cmake_release:
 .ONESHELL:
 .PHONY: build_cmake_debug
 build_cmake_debug:
+	if [ ! -d "build" ]; then mkdir "build"; fi
 	cd build
 	cmake -DCMAKE_BUILD_TYPE=Debug ..
 
+# make build rules
 # launch make in CMake build directory
 .ONESHELL:
 .PHONY: build_make
@@ -51,6 +58,7 @@ build_make:
 	cd build
 	make VERBOSE=1
 
+# clean and run rules
 # clean build directory
 .PHONY: clean
 clean:
@@ -70,10 +78,16 @@ run_tests: ./build/src/tests/piece_test ./build/src/tests/tile_test ./build/src/
 	./build/src/tests/move_test
 	./build/src/tests/game_test
 
+# dev rules
 # run dev mode (with entr)
 .PHONY: dev
 dev: ./entr.sh
 	./entr.sh
+
+# generate .clang-format file
+.PHONY: clang-format-generate
+clang-format-generate:
+	clang-format -style=llvm -dump-config > .clang-format
 
 # format code with clang-format
 .PHONY: format
