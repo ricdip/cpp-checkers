@@ -1,4 +1,2 @@
 #pragma once
-enum class PieceType {
-    PAWN, QUEEN
-};
+enum class PieceType { PAWN, QUEEN };

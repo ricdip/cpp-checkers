@@ -15,16 +15,17 @@
 #define H 8
 
 class Board {
-    private:
-        Tile tiles[ROWS][COLS];
-        void initBoard();
-    public:
-        Board(bool = false);
-        // (rows, colums) = (rank, file) = (1, A)
-        bool checkPositionInBound(uint8_t, uint8_t) const;
-        uint8_t countPiecesByColor(bool color);
+private:
+  Tile tiles[ROWS][COLS];
+  void initBoard();
 
-        Tile& operator()(uint8_t, uint8_t);
-        const Tile& operator()(uint8_t, uint8_t) const;
-        friend std::ostream& operator<<(std::ostream&, const Board&);
+public:
+  Board(bool = false);
+  // (rows, colums) = (rank, file) = (1, A)
+  bool checkPositionInBound(uint8_t, uint8_t) const;
+  uint8_t countPiecesByColor(bool color);
+
+  Tile &operator()(uint8_t, uint8_t);
+  const Tile &operator()(uint8_t, uint8_t) const;
+  friend std::ostream &operator<<(std::ostream &, const Board &);
 };
