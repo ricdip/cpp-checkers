@@ -75,6 +75,11 @@ run_tests: ./build/src/tests/piece_test ./build/src/tests/tile_test ./build/src/
 dev: ./entr.sh
 	./entr.sh
 
+# format code with clang-format
+.PHONY: format
+format:
+	fd --type f -e cpp -e hpp | xargs clang-format -i
+
 # clean, build release version and run program
 .PHONY: all
 all: clean build_release run
