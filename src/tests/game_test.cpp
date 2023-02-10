@@ -219,3 +219,82 @@ TEST(GameTest, blackPawnMovesWithCapture) {
     ASSERT_EQ(oneRightOneLeftCaptureMoves.size(), 1);
     ASSERT_EQ(std::find(oneRightOneLeftCaptureMoves.begin(), oneRightOneLeftCaptureMoves.end(), oneRightOneLeftCaptureMoveResult) != oneRightOneLeftCaptureMoves.end(), true);
 }
+
+//
+// queen
+//
+
+TEST(GameTest, whiteQueenMovesWithoutCapture) {
+    Game game = Game();
+
+    Board boardTwoMoves = Board(true);
+    boardTwoMoves(D, 5) = new Queen(WHITE);
+    std::vector<Move> twoMoves = game.getPieceMoves(boardTwoMoves, D, 5);
+    ASSERT_EQ(twoMoves.size(), 4);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C4")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5E4")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C6")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5E6")) != twoMoves.end(), true);
+
+    Board boardOneMove = Board(true);
+    boardOneMove(D, 5) = new Queen(WHITE);
+    boardOneMove(C, 4) = new Pawn(WHITE);
+    std::vector<Move> oneMove = game.getPieceMoves(boardOneMove, D, 5);
+    ASSERT_EQ(oneMove.size(), 3);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E4")) != oneMove.end(), true);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E6")) != oneMove.end(), true);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5C6")) != oneMove.end(), true);
+
+    Board boardZeroMoves = Board(true);
+    boardZeroMoves(D, 5) = new Queen(WHITE);
+    boardZeroMoves(C, 4) = new Pawn(WHITE);
+    boardZeroMoves(E, 4) = new Pawn(WHITE);
+    boardZeroMoves(C, 6) = new Pawn(WHITE);
+    boardZeroMoves(E, 6) = new Pawn(WHITE);
+    std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+    ASSERT_EQ(zeroMoves.size(), 0);
+
+    Board boardMovesWithAnOutOfBounds = Board(true);
+    boardMovesWithAnOutOfBounds(A, 8) = new Queen(WHITE);
+    std::vector<Move> oneOutOfBoundsMove = game.getPieceMoves(boardMovesWithAnOutOfBounds, A, 8);
+    ASSERT_EQ(oneOutOfBoundsMove.size(), 1);
+    ASSERT_EQ(std::find(oneOutOfBoundsMove.begin(), oneOutOfBoundsMove.end(), Move("A8B7")) != oneOutOfBoundsMove.end(), true);
+}
+
+TEST(GameTest, blackQueenMovesWithoutCapture) {
+    Game game = Game();
+
+    Board boardTwoMoves = Board(true);
+    boardTwoMoves(D, 5) = new Queen(BLACK);
+    std::vector<Move> twoMoves = game.getPieceMoves(boardTwoMoves, D, 5);
+    ASSERT_EQ(twoMoves.size(), 4);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C4")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5E4")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C6")) != twoMoves.end(), true);
+    ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5E6")) != twoMoves.end(), true);
+
+    Board boardOneMove = Board(true);
+    boardOneMove(D, 5) = new Queen(BLACK);
+    boardOneMove(C, 4) = new Pawn(BLACK);
+    std::vector<Move> oneMove = game.getPieceMoves(boardOneMove, D, 5);
+    ASSERT_EQ(oneMove.size(), 3);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E4")) != oneMove.end(), true);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E6")) != oneMove.end(), true);
+    ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5C6")) != oneMove.end(), true);
+
+    Board boardZeroMoves = Board(true);
+    boardZeroMoves(D, 5) = new Queen(BLACK);
+    boardZeroMoves(C, 4) = new Pawn(BLACK);
+    boardZeroMoves(E, 4) = new Pawn(BLACK);
+    boardZeroMoves(C, 6) = new Pawn(BLACK);
+    boardZeroMoves(E, 6) = new Pawn(BLACK);
+    std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+    ASSERT_EQ(zeroMoves.size(), 0);
+
+    Board boardMovesWithAnOutOfBounds = Board(true);
+    boardMovesWithAnOutOfBounds(A, 8) = new Queen(BLACK);
+    std::vector<Move> oneOutOfBoundsMove = game.getPieceMoves(boardMovesWithAnOutOfBounds, A, 8);
+    ASSERT_EQ(oneOutOfBoundsMove.size(), 1);
+    ASSERT_EQ(std::find(oneOutOfBoundsMove.begin(), oneOutOfBoundsMove.end(), Move("A8B7")) != oneOutOfBoundsMove.end(), true);
+}
+
