@@ -1,8 +1,8 @@
 #pragma once
 #include "../board/Board.hpp"
 #include "../move/Move.hpp"
-#include "../piece/Pawn.hpp"
-#include "../piece/Queen.hpp"
+#include "../piece/pawn/Pawn.hpp"
+#include "../piece/queen/Queen.hpp"
 #define WHITE true
 #define BLACK false
 

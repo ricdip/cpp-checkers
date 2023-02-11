@@ -1,5 +1,5 @@
 #include "Pawn.hpp"
-#include "../game/Game.hpp"
+#include "../../game/Game.hpp"
 
 Pawn::Pawn(bool color) : Piece(color) { type = PieceType::PAWN; }
 
