@@ -1,4 +1,4 @@
-#include "../lib/include/Game.hpp"
+#include "../lib/game/Game.hpp"
 
 int main() {
   Board a = Board();

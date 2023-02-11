@@ -1,7 +1,7 @@
 // clang-format off
 #include <gtest/gtest.h>
 // clang-format on
-#include "../lib/include/Game.hpp"
+#include "../lib/game/Game.hpp"
 #include <algorithm>
 #include <vector>
 

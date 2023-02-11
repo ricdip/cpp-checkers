@@ -1,5 +1,5 @@
 #pragma once
-#include "Piece.hpp"
+#include "../piece/Piece.hpp"
 #include <vector>
 
 class Move {

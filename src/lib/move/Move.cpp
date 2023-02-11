@@ -1,5 +1,5 @@
-#include "include/Move.hpp"
-#include "include/Game.hpp"
+#include "../move/Move.hpp"
+#include "../game/Game.hpp"
 #include <algorithm>
 
 Move::Move(uint8_t originFile, uint8_t originRank, uint8_t destinationFile,

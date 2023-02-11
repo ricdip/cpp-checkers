@@ -1,4 +1,4 @@
-#include "include/Game.hpp"
+#include "Game.hpp"
 
 std::vector<Move> Game::getPieceMoves(const Board &board, const uint8_t file,
                                       const uint8_t rank) const {

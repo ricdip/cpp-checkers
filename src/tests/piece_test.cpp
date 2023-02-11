@@ -1,7 +1,7 @@
 // clang-format off
 #include <gtest/gtest.h>
 // clang-format on
-#include "../lib/include/Game.hpp"
+#include "../lib/game/Game.hpp"
 
 TEST(PieceTest, attributes) {
   Pawn P = Pawn(WHITE);

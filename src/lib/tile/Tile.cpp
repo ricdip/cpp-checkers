@@ -1,4 +1,4 @@
-#include "include/Tile.hpp"
+#include "Tile.hpp"
 
 // make_shared creates an empty shared pointer
 Tile::Tile() : occupant(nullptr) {}

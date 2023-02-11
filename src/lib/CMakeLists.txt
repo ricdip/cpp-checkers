@@ -1,10 +1,16 @@
 message("CMake lib")
 
 # add the given directories to those the compiler uses to search for include files (headers file)
-include_directories(include)
+include_directories(board)
+include_directories(game)
+include_directories(move)
+include_directories(piece)
+include_directories(tile)
 
 # file manipulation command: all C++ source files
-file(GLOB SOURCES "*.cpp")
+#file(GLOB SOURCES "*.cpp")
+# (search in every sub-directory)
+file(GLOB_RECURSE SOURCES "*.cpp")
 
 # generate a shared library called "checkers_shared" to be built from the source files (specified in the previous command)
 add_library(checkers_shared SHARED ${SOURCES})

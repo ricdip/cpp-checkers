@@ -1,5 +1,5 @@
-#include "include/Board.hpp"
-#include "include/Game.hpp"
+#include "Board.hpp"
+#include "../game/Game.hpp"
 #include <cstdint>
 #include <string>
 

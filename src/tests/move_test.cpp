@@ -1,8 +1,8 @@
 // clang-format off
 #include <gtest/gtest.h>
 // clang-format on
-#include "../lib/include/Board.hpp"
-#include "../lib/include/Move.hpp"
+#include "../lib/board/Board.hpp"
+#include "../lib/move/Move.hpp"
 
 TEST(MoveTest, attributes) {
   Move m1 = Move(A, 1, B, 2);
