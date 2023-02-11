@@ -1,7 +1,21 @@
 // clang-format off
 #include <gtest/gtest.h>
+#include <algorithm>
 // clang-format on
 #include "../lib/game/Game.hpp"
+
+TEST(BoardTest, baseMethods) {
+    Board board1 = Board();
+    Board board2 = Board(BLACK, true);
+
+    ASSERT_EQ(board1.getTurn(), WHITE);
+    ASSERT_EQ(board1.countPiecesByColor(WHITE), 12);
+    ASSERT_EQ(board1.countPiecesByColor(BLACK), 12);
+
+    ASSERT_EQ(board2.getTurn(), BLACK);
+    ASSERT_EQ(board2.countPiecesByColor(WHITE), 0);
+    ASSERT_EQ(board2.countPiecesByColor(BLACK), 0);
+}
 
 TEST(BoardTest, operators) {
   Board board = Board();
@@ -77,7 +91,32 @@ TEST(BoardTest, customBoards) {
   ASSERT_EQ(customBoard.countPiecesByColor(BLACK), 1);
 }
 
-// TODO: current board moves test
 TEST(BoardTest, boardMoves) {
-    ASSERT_EQ(1, 1);
+    Board board1 = Board();
+
+    std::vector<Move> board1Moves = board1.getMoves();
+
+    ASSERT_EQ(board1Moves.size(), 7);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("A6B5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C6B5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C6D5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E6D5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E6F5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G6F5")) != board1Moves.end(), true);
+    ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G6H5")) != board1Moves.end(), true);
+
+    Board board2 = Board(BLACK, true);
+    board2(C, 6) = new Queen(BLACK);
+    board2(D, 5) = new Pawn(WHITE);
+
+    std::vector<Move> board2Moves = board2.getMoves();
+
+    Move moveCapturedPawn = Move("C6E4");
+    moveCapturedPawn.addCapture(PieceLocation{D, 5});
+
+    ASSERT_EQ(board2Moves.size(), 4);
+    ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6B5")) != board2Moves.end(), true);
+    ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), moveCapturedPawn) != board2Moves.end(), true);
+    ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6B7")) != board2Moves.end(), true);
+    ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6D7")) != board2Moves.end(), true);
 }

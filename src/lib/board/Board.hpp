@@ -23,6 +23,7 @@ private:
 
 public:
   Board(bool = false);
+  Board(bool, bool);
   // (rows, colums) = (rank, file) = (1, A)
   bool checkPositionInBound(uint8_t, uint8_t) const;
   uint8_t countPiecesByColor(bool color) const;

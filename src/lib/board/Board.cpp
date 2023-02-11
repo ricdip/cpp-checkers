@@ -10,6 +10,12 @@ Board::Board(bool emptyBoard) : turn(true) {
   }
 }
 
+Board::Board(bool turn, bool emptyBoard) : turn(turn) {
+  if (!emptyBoard) {
+    initBoard();
+  }
+}
+
 void Board::initBoard() {
   // black
   // Board::operator() = new Pawn()
