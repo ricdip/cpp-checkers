@@ -1,7 +1,7 @@
 // clang-format off
 #include <gtest/gtest.h>
 // clang-format on
-#include "../lib/game/Game.hpp"
+#include "../lib/move/generator/MoveGenerator.hpp"
 #include <algorithm>
 #include <vector>
 
@@ -9,12 +9,10 @@
 // pawn
 //
 
-TEST(GameTest, whitePawnMovesWithoutCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, whitePawnMovesWithoutCapture) {
   Board boardTwoMoves = Board(true);
   boardTwoMoves(D, 5) = new Pawn(WHITE);
-  std::vector<Move> twoMoves = game.getPieceMoves(boardTwoMoves, D, 5);
+  std::vector<Move> twoMoves = MoveGenerator::getPieceMoves(boardTwoMoves, D, 5);
   ASSERT_EQ(twoMoves.size(), 2);
   ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C4")) !=
                 twoMoves.end(),
@@ -26,7 +24,7 @@ TEST(GameTest, whitePawnMovesWithoutCapture) {
   Board boardOneMove = Board(true);
   boardOneMove(D, 5) = new Pawn(WHITE);
   boardOneMove(C, 4) = new Pawn(WHITE);
-  std::vector<Move> oneMove = game.getPieceMoves(boardOneMove, D, 5);
+  std::vector<Move> oneMove = MoveGenerator::getPieceMoves(boardOneMove, D, 5);
   ASSERT_EQ(oneMove.size(), 1);
   ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E4")) !=
                 oneMove.end(),
@@ -36,13 +34,13 @@ TEST(GameTest, whitePawnMovesWithoutCapture) {
   boardZeroMoves(D, 5) = new Pawn(WHITE);
   boardZeroMoves(C, 4) = new Pawn(WHITE);
   boardZeroMoves(E, 4) = new Pawn(WHITE);
-  std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+  std::vector<Move> zeroMoves = MoveGenerator::getPieceMoves(boardZeroMoves, D, 5);
   ASSERT_EQ(zeroMoves.size(), 0);
 
   Board boardMovesWithAnOutOfBounds = Board(true);
   boardMovesWithAnOutOfBounds(A, 8) = new Pawn(WHITE);
   std::vector<Move> oneOutOfBoundsMove =
-      game.getPieceMoves(boardMovesWithAnOutOfBounds, A, 8);
+      MoveGenerator::getPieceMoves(boardMovesWithAnOutOfBounds, A, 8);
   ASSERT_EQ(oneOutOfBoundsMove.size(), 1);
   ASSERT_EQ(std::find(oneOutOfBoundsMove.begin(), oneOutOfBoundsMove.end(),
                       Move("A8B7")) != oneOutOfBoundsMove.end(),
@@ -51,16 +49,14 @@ TEST(GameTest, whitePawnMovesWithoutCapture) {
   Board boardMovesWithAllOutOfBounds = Board(true);
   boardMovesWithAllOutOfBounds(A, 1) = new Pawn(WHITE);
   std::vector<Move> allOutOfBoundsMoves =
-      game.getPieceMoves(boardMovesWithAllOutOfBounds, A, 1);
+      MoveGenerator::getPieceMoves(boardMovesWithAllOutOfBounds, A, 1);
   ASSERT_EQ(allOutOfBoundsMoves.size(), 0);
 }
 
-TEST(GameTest, blackPawnMovesWithoutCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, blackPawnMovesWithoutCapture) {
   Board boardTwoMoves = Board(true);
   boardTwoMoves(D, 5) = new Pawn(BLACK);
-  std::vector<Move> twoMoves = game.getPieceMoves(boardTwoMoves, D, 5);
+  std::vector<Move> twoMoves = MoveGenerator::getPieceMoves(boardTwoMoves, D, 5);
   ASSERT_EQ(twoMoves.size(), 2);
   ASSERT_EQ(std::find(twoMoves.begin(), twoMoves.end(), Move("D5C6")) !=
                 twoMoves.end(),
@@ -72,7 +68,7 @@ TEST(GameTest, blackPawnMovesWithoutCapture) {
   Board boardOneMove = Board(true);
   boardOneMove(D, 5) = new Pawn(BLACK);
   boardOneMove(C, 6) = new Pawn(BLACK);
-  std::vector<Move> oneMove = game.getPieceMoves(boardOneMove, D, 5);
+  std::vector<Move> oneMove = MoveGenerator::getPieceMoves(boardOneMove, D, 5);
   ASSERT_EQ(oneMove.size(), 1);
   ASSERT_EQ(std::find(oneMove.begin(), oneMove.end(), Move("D5E6")) !=
                 oneMove.end(),
@@ -82,13 +78,13 @@ TEST(GameTest, blackPawnMovesWithoutCapture) {
   boardZeroMoves(D, 5) = new Pawn(BLACK);
   boardZeroMoves(C, 6) = new Pawn(BLACK);
   boardZeroMoves(E, 6) = new Pawn(BLACK);
-  std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+  std::vector<Move> zeroMoves = MoveGenerator::getPieceMoves(boardZeroMoves, D, 5);
   ASSERT_EQ(zeroMoves.size(), 0);
 
   Board boardMovesWithAnOutOfBounds = Board(true);
   boardMovesWithAnOutOfBounds(A, 1) = new Pawn(BLACK);
   std::vector<Move> oneOutOfBoundsMove =
-      game.getPieceMoves(boardMovesWithAnOutOfBounds, A, 1);
+      MoveGenerator::getPieceMoves(boardMovesWithAnOutOfBounds, A, 1);
   ASSERT_EQ(oneOutOfBoundsMove.size(), 1);
   ASSERT_EQ(std::find(oneOutOfBoundsMove.begin(), oneOutOfBoundsMove.end(),
                       Move("A1B2")) != oneOutOfBoundsMove.end(),
@@ -97,13 +93,11 @@ TEST(GameTest, blackPawnMovesWithoutCapture) {
   Board boardMovesWithAllOutOfBounds = Board(true);
   boardMovesWithAllOutOfBounds(A, 8) = new Pawn(BLACK);
   std::vector<Move> allOutOfBoundsMoves =
-      game.getPieceMoves(boardMovesWithAllOutOfBounds, A, 8);
+      MoveGenerator::getPieceMoves(boardMovesWithAllOutOfBounds, A, 8);
   ASSERT_EQ(allOutOfBoundsMoves.size(), 0);
 }
 
-TEST(GameTest, whitePawnMovesWithCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, whitePawnMovesWithCapture) {
   Board boardOneLeftCaptureMove = Board(true);
   boardOneLeftCaptureMove(D, 5) = new Pawn(WHITE);
   boardOneLeftCaptureMove(C, 4) = new Pawn(BLACK);
@@ -111,7 +105,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   Move oneLeftCaptureMoveResult = Move("D5B3");
   oneLeftCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftCaptureMoves =
-      game.getPieceMoves(boardOneLeftCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneLeftCaptureMove, D, 5);
   ASSERT_EQ(oneLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftCaptureMoves.begin(), oneLeftCaptureMoves.end(),
                       oneLeftCaptureMoveResult) != oneLeftCaptureMoves.end(),
@@ -126,7 +120,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   twoLeftCaptureMoveResult.addCapture(PieceLocation{D, 6});
   twoLeftCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftCaptureMoves =
-      game.getPieceMoves(boardTwoLeftCaptureMove, E, 7);
+      MoveGenerator::getPieceMoves(boardTwoLeftCaptureMove, E, 7);
   ASSERT_EQ(twoLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoLeftCaptureMoves.begin(), twoLeftCaptureMoves.end(),
                       twoLeftCaptureMoveResult) != twoLeftCaptureMoves.end(),
@@ -139,7 +133,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   Move oneRightCaptureMoveResult = Move("D5F3");
   oneRightCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightCaptureMoves =
-      game.getPieceMoves(boardOneRightCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneRightCaptureMove, D, 5);
   ASSERT_EQ(oneRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightCaptureMoves.begin(), oneRightCaptureMoves.end(),
                       oneRightCaptureMoveResult) != oneRightCaptureMoves.end(),
@@ -154,7 +148,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   twoRightCaptureMoveResult.addCapture(PieceLocation{C, 6});
   twoRightCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> twoRightCaptureMoves =
-      game.getPieceMoves(boardTwoRightCaptureMove, B, 7);
+      MoveGenerator::getPieceMoves(boardTwoRightCaptureMove, B, 7);
   ASSERT_EQ(twoRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoRightCaptureMoves.begin(), twoRightCaptureMoves.end(),
                       twoRightCaptureMoveResult) != twoRightCaptureMoves.end(),
@@ -169,7 +163,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 6});
   oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightCaptureMove, D, 7);
   ASSERT_EQ(oneLeftOneRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightCaptureMoves.begin(),
                       oneLeftOneRightCaptureMoves.end(),
@@ -186,7 +180,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
   oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 6});
   oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftCaptureMove, D, 7);
   ASSERT_EQ(oneRightOneLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftCaptureMoves.begin(),
                       oneRightOneLeftCaptureMoves.end(),
@@ -195,9 +189,7 @@ TEST(GameTest, whitePawnMovesWithCapture) {
             true);
 }
 
-TEST(GameTest, blackPawnMovesWithCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, blackPawnMovesWithCapture) {
   Board boardOneLeftCaptureMove = Board(true);
   boardOneLeftCaptureMove(D, 3) = new Pawn(BLACK);
   boardOneLeftCaptureMove(C, 4) = new Pawn(WHITE);
@@ -205,7 +197,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   Move oneLeftCaptureMoveResult = Move("D3B5");
   oneLeftCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftCaptureMoves =
-      game.getPieceMoves(boardOneLeftCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneLeftCaptureMove, D, 3);
   ASSERT_EQ(oneLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftCaptureMoves.begin(), oneLeftCaptureMoves.end(),
                       oneLeftCaptureMoveResult) != oneLeftCaptureMoves.end(),
@@ -220,7 +212,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   twoLeftCaptureMoveResult.addCapture(PieceLocation{D, 2});
   twoLeftCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftCaptureMoves =
-      game.getPieceMoves(boardTwoLeftCaptureMove, E, 1);
+      MoveGenerator::getPieceMoves(boardTwoLeftCaptureMove, E, 1);
   ASSERT_EQ(twoLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoLeftCaptureMoves.begin(), twoLeftCaptureMoves.end(),
                       twoLeftCaptureMoveResult) != twoLeftCaptureMoves.end(),
@@ -233,7 +225,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   Move oneRightCaptureMoveResult = Move("D3F5");
   oneRightCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightCaptureMoves =
-      game.getPieceMoves(boardOneRightCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneRightCaptureMove, D, 3);
   ASSERT_EQ(oneRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightCaptureMoves.begin(), oneRightCaptureMoves.end(),
                       oneRightCaptureMoveResult) != oneRightCaptureMoves.end(),
@@ -248,7 +240,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   twoRightCaptureMoveResult.addCapture(PieceLocation{C, 2});
   twoRightCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> twoRightCaptureMoves =
-      game.getPieceMoves(boardTwoRightCaptureMove, B, 1);
+      MoveGenerator::getPieceMoves(boardTwoRightCaptureMove, B, 1);
   ASSERT_EQ(twoRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoRightCaptureMoves.begin(), twoRightCaptureMoves.end(),
                       twoRightCaptureMoveResult) != twoRightCaptureMoves.end(),
@@ -263,7 +255,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 2});
   oneLeftOneRightCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightCaptureMove, D, 1);
   ASSERT_EQ(oneLeftOneRightCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightCaptureMoves.begin(),
                       oneLeftOneRightCaptureMoves.end(),
@@ -280,7 +272,7 @@ TEST(GameTest, blackPawnMovesWithCapture) {
   oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 2});
   oneRightOneLeftCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftCaptureMove, D, 1);
   ASSERT_EQ(oneRightOneLeftCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftCaptureMoves.begin(),
                       oneRightOneLeftCaptureMoves.end(),
@@ -293,12 +285,10 @@ TEST(GameTest, blackPawnMovesWithCapture) {
 // queens
 //
 
-TEST(GameTest, whiteQueenMovesWithoutCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, whiteQueenMovesWithoutCapture) {
   Board boardFourMoves = Board(true);
   boardFourMoves(D, 5) = new Queen(WHITE);
-  std::vector<Move> fourMoves = game.getPieceMoves(boardFourMoves, D, 5);
+  std::vector<Move> fourMoves = MoveGenerator::getPieceMoves(boardFourMoves, D, 5);
   ASSERT_EQ(fourMoves.size(), 4);
   ASSERT_EQ(std::find(fourMoves.begin(), fourMoves.end(), Move("D5C4")) !=
                 fourMoves.end(),
@@ -316,7 +306,7 @@ TEST(GameTest, whiteQueenMovesWithoutCapture) {
   Board boardThreeMove = Board(true);
   boardThreeMove(D, 5) = new Queen(WHITE);
   boardThreeMove(C, 4) = new Pawn(WHITE);
-  std::vector<Move> threeMoves = game.getPieceMoves(boardThreeMove, D, 5);
+  std::vector<Move> threeMoves = MoveGenerator::getPieceMoves(boardThreeMove, D, 5);
   ASSERT_EQ(threeMoves.size(), 3);
   ASSERT_EQ(std::find(threeMoves.begin(), threeMoves.end(), Move("D5E4")) !=
                 threeMoves.end(),
@@ -334,25 +324,23 @@ TEST(GameTest, whiteQueenMovesWithoutCapture) {
   boardZeroMoves(E, 4) = new Pawn(WHITE);
   boardZeroMoves(C, 6) = new Pawn(WHITE);
   boardZeroMoves(E, 6) = new Pawn(WHITE);
-  std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+  std::vector<Move> zeroMoves = MoveGenerator::getPieceMoves(boardZeroMoves, D, 5);
   ASSERT_EQ(zeroMoves.size(), 0);
 
   Board boardMovesWithOutOfBounds = Board(true);
   boardMovesWithOutOfBounds(A, 8) = new Queen(WHITE);
   std::vector<Move> outOfBoundsMoves =
-      game.getPieceMoves(boardMovesWithOutOfBounds, A, 8);
+      MoveGenerator::getPieceMoves(boardMovesWithOutOfBounds, A, 8);
   ASSERT_EQ(outOfBoundsMoves.size(), 1);
   ASSERT_EQ(std::find(outOfBoundsMoves.begin(), outOfBoundsMoves.end(),
                       Move("A8B7")) != outOfBoundsMoves.end(),
             true);
 }
 
-TEST(GameTest, blackQueenMovesWithoutCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, blackQueenMovesWithoutCapture) {
   Board boardFourMoves = Board(true);
   boardFourMoves(D, 5) = new Queen(BLACK);
-  std::vector<Move> fourMoves = game.getPieceMoves(boardFourMoves, D, 5);
+  std::vector<Move> fourMoves = MoveGenerator::getPieceMoves(boardFourMoves, D, 5);
   ASSERT_EQ(fourMoves.size(), 4);
   ASSERT_EQ(std::find(fourMoves.begin(), fourMoves.end(), Move("D5C4")) !=
                 fourMoves.end(),
@@ -370,7 +358,7 @@ TEST(GameTest, blackQueenMovesWithoutCapture) {
   Board boardThreeMoves = Board(true);
   boardThreeMoves(D, 5) = new Queen(BLACK);
   boardThreeMoves(C, 4) = new Pawn(BLACK);
-  std::vector<Move> threeMoves = game.getPieceMoves(boardThreeMoves, D, 5);
+  std::vector<Move> threeMoves = MoveGenerator::getPieceMoves(boardThreeMoves, D, 5);
   ASSERT_EQ(threeMoves.size(), 3);
   ASSERT_EQ(std::find(threeMoves.begin(), threeMoves.end(), Move("D5E4")) !=
                 threeMoves.end(),
@@ -388,22 +376,20 @@ TEST(GameTest, blackQueenMovesWithoutCapture) {
   boardZeroMoves(E, 4) = new Pawn(BLACK);
   boardZeroMoves(C, 6) = new Pawn(BLACK);
   boardZeroMoves(E, 6) = new Pawn(BLACK);
-  std::vector<Move> zeroMoves = game.getPieceMoves(boardZeroMoves, D, 5);
+  std::vector<Move> zeroMoves = MoveGenerator::getPieceMoves(boardZeroMoves, D, 5);
   ASSERT_EQ(zeroMoves.size(), 0);
 
   Board boardMovesWithOutOfBounds = Board(true);
   boardMovesWithOutOfBounds(A, 8) = new Queen(BLACK);
   std::vector<Move> outOfBoundsMoves =
-      game.getPieceMoves(boardMovesWithOutOfBounds, A, 8);
+      MoveGenerator::getPieceMoves(boardMovesWithOutOfBounds, A, 8);
   ASSERT_EQ(outOfBoundsMoves.size(), 1);
   ASSERT_EQ(std::find(outOfBoundsMoves.begin(), outOfBoundsMoves.end(),
                       Move("A8B7")) != outOfBoundsMoves.end(),
             true);
 }
 
-TEST(GameTest, whiteQueenMovesWithCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, whiteQueenMovesWithCapture) {
   Board boardOneLeftForwardCaptureMove = Board(true);
   boardOneLeftForwardCaptureMove(D, 5) = new Queen(WHITE);
   boardOneLeftForwardCaptureMove(C, 4) = new Pawn(BLACK);
@@ -413,7 +399,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   Move oneLeftForwardCaptureMoveResult = Move("D5B3");
   oneLeftForwardCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftForwardCaptureMoves =
-      game.getPieceMoves(boardOneLeftForwardCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneLeftForwardCaptureMove, D, 5);
   ASSERT_EQ(oneLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftForwardCaptureMoves.begin(),
                       oneLeftForwardCaptureMoves.end(),
@@ -430,7 +416,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   Move oneLeftBackCaptureMoveResult = Move("D3B5");
   oneLeftBackCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftBackCaptureMoves =
-      game.getPieceMoves(boardOneLeftBackCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneLeftBackCaptureMove, D, 3);
   ASSERT_EQ(oneLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(
       std::find(oneLeftBackCaptureMoves.begin(), oneLeftBackCaptureMoves.end(),
@@ -448,7 +434,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   twoLeftForwardCaptureMoveResult.addCapture(PieceLocation{D, 6});
   twoLeftForwardCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftForwardCaptureMoves =
-      game.getPieceMoves(boardTwoLeftForwardCaptureMove, E, 7);
+      MoveGenerator::getPieceMoves(boardTwoLeftForwardCaptureMove, E, 7);
   ASSERT_EQ(twoLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoLeftForwardCaptureMoves.begin(),
                       twoLeftForwardCaptureMoves.end(),
@@ -465,7 +451,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   twoLeftBackCaptureMoveResult.addCapture(PieceLocation{D, 2});
   twoLeftBackCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftBackCaptureMoves =
-      game.getPieceMoves(boardTwoLeftBackCaptureMove, E, 1);
+      MoveGenerator::getPieceMoves(boardTwoLeftBackCaptureMove, E, 1);
   ASSERT_EQ(twoLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(
       std::find(twoLeftBackCaptureMoves.begin(), twoLeftBackCaptureMoves.end(),
@@ -481,7 +467,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   Move oneRightForwardCaptureMoveResult = Move("D5F3");
   oneRightForwardCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightForwardCaptureMoves =
-      game.getPieceMoves(boardOneRightForwardCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneRightForwardCaptureMove, D, 5);
   ASSERT_EQ(oneRightForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightForwardCaptureMoves.begin(),
                       oneRightForwardCaptureMoves.end(),
@@ -498,7 +484,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   Move oneRightBackCaptureMoveResult = Move("D3F5");
   oneRightBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightBackCaptureMoves =
-      game.getPieceMoves(boardOneRightBackCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneRightBackCaptureMove, D, 3);
   ASSERT_EQ(oneRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightBackCaptureMoves.begin(),
                       oneRightBackCaptureMoves.end(),
@@ -515,7 +501,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   twoRightBackCaptureMoveResult.addCapture(PieceLocation{C, 2});
   twoRightBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> twoRightBackCaptureMoves =
-      game.getPieceMoves(boardTwoRightBackCaptureMove, B, 1);
+      MoveGenerator::getPieceMoves(boardTwoRightBackCaptureMove, B, 1);
   ASSERT_EQ(twoRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoRightBackCaptureMoves.begin(),
                       twoRightBackCaptureMoves.end(),
@@ -534,7 +520,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   oneLeftOneRightForwardCaptureMoveResult.addCapture(PieceLocation{C, 6});
   oneLeftOneRightForwardCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightForwardCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightForwardCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightForwardCaptureMove, D, 7);
   ASSERT_EQ(oneLeftOneRightForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightForwardCaptureMoves.begin(),
                       oneLeftOneRightForwardCaptureMoves.end(),
@@ -553,7 +539,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   oneRightOneLeftForwardCaptureMoveResult.addCapture(PieceLocation{E, 6});
   oneRightOneLeftForwardCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftForwardCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftForwardCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftForwardCaptureMove, D, 7);
   ASSERT_EQ(oneRightOneLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftForwardCaptureMoves.begin(),
                       oneRightOneLeftForwardCaptureMoves.end(),
@@ -570,7 +556,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   oneLeftOneRightBackCaptureMoveResult.addCapture(PieceLocation{C, 2});
   oneLeftOneRightBackCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightBackCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightBackCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightBackCaptureMove, D, 1);
   ASSERT_EQ(oneLeftOneRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightBackCaptureMoves.begin(),
                       oneLeftOneRightBackCaptureMoves.end(),
@@ -587,7 +573,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
   oneRightOneLeftBackCaptureMoveResult.addCapture(PieceLocation{E, 2});
   oneRightOneLeftBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftBackCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftBackCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftBackCaptureMove, D, 1);
   ASSERT_EQ(oneRightOneLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftBackCaptureMoves.begin(),
                       oneRightOneLeftBackCaptureMoves.end(),
@@ -596,9 +582,7 @@ TEST(GameTest, whiteQueenMovesWithCapture) {
             true);
 }
 
-TEST(GameTest, blackQueenMovesWithCapture) {
-  Game game = Game();
-
+TEST(MoveGeneratorTest, blackQueenMovesWithCapture) {
   Board boardOneLeftForwardCaptureMove = Board(true);
   boardOneLeftForwardCaptureMove(D, 5) = new Queen(BLACK);
   boardOneLeftForwardCaptureMove(C, 4) = new Pawn(WHITE);
@@ -608,7 +592,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   Move oneLeftForwardCaptureMoveResult = Move("D5B3");
   oneLeftForwardCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftForwardCaptureMoves =
-      game.getPieceMoves(boardOneLeftForwardCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneLeftForwardCaptureMove, D, 5);
   ASSERT_EQ(oneLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftForwardCaptureMoves.begin(),
                       oneLeftForwardCaptureMoves.end(),
@@ -625,7 +609,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   Move oneLeftBackCaptureMoveResult = Move("D3B5");
   oneLeftBackCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftBackCaptureMoves =
-      game.getPieceMoves(boardOneLeftBackCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneLeftBackCaptureMove, D, 3);
   ASSERT_EQ(oneLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(
       std::find(oneLeftBackCaptureMoves.begin(), oneLeftBackCaptureMoves.end(),
@@ -643,7 +627,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   twoLeftForwardCaptureMoveResult.addCapture(PieceLocation{D, 6});
   twoLeftForwardCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftForwardCaptureMoves =
-      game.getPieceMoves(boardTwoLeftForwardCaptureMove, E, 7);
+      MoveGenerator::getPieceMoves(boardTwoLeftForwardCaptureMove, E, 7);
   ASSERT_EQ(twoLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoLeftForwardCaptureMoves.begin(),
                       twoLeftForwardCaptureMoves.end(),
@@ -660,7 +644,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   twoLeftBackCaptureMoveResult.addCapture(PieceLocation{D, 2});
   twoLeftBackCaptureMoveResult.addCapture(PieceLocation{B, 4});
   std::vector<Move> twoLeftBackCaptureMoves =
-      game.getPieceMoves(boardTwoLeftBackCaptureMove, E, 1);
+      MoveGenerator::getPieceMoves(boardTwoLeftBackCaptureMove, E, 1);
   ASSERT_EQ(twoLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(
       std::find(twoLeftBackCaptureMoves.begin(), twoLeftBackCaptureMoves.end(),
@@ -676,7 +660,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   Move oneRightForwardCaptureMoveResult = Move("D5F3");
   oneRightForwardCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightForwardCaptureMoves =
-      game.getPieceMoves(boardOneRightForwardCaptureMove, D, 5);
+      MoveGenerator::getPieceMoves(boardOneRightForwardCaptureMove, D, 5);
   ASSERT_EQ(oneRightForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightForwardCaptureMoves.begin(),
                       oneRightForwardCaptureMoves.end(),
@@ -693,7 +677,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   Move oneRightBackCaptureMoveResult = Move("D3F5");
   oneRightBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightBackCaptureMoves =
-      game.getPieceMoves(boardOneRightBackCaptureMove, D, 3);
+      MoveGenerator::getPieceMoves(boardOneRightBackCaptureMove, D, 3);
   ASSERT_EQ(oneRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightBackCaptureMoves.begin(),
                       oneRightBackCaptureMoves.end(),
@@ -710,7 +694,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   twoRightBackCaptureMoveResult.addCapture(PieceLocation{C, 2});
   twoRightBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> twoRightBackCaptureMoves =
-      game.getPieceMoves(boardTwoRightBackCaptureMove, B, 1);
+      MoveGenerator::getPieceMoves(boardTwoRightBackCaptureMove, B, 1);
   ASSERT_EQ(twoRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(twoRightBackCaptureMoves.begin(),
                       twoRightBackCaptureMoves.end(),
@@ -729,7 +713,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   oneLeftOneRightForwardCaptureMoveResult.addCapture(PieceLocation{C, 6});
   oneLeftOneRightForwardCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightForwardCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightForwardCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightForwardCaptureMove, D, 7);
   ASSERT_EQ(oneLeftOneRightForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightForwardCaptureMoves.begin(),
                       oneLeftOneRightForwardCaptureMoves.end(),
@@ -748,7 +732,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   oneRightOneLeftForwardCaptureMoveResult.addCapture(PieceLocation{E, 6});
   oneRightOneLeftForwardCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftForwardCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftForwardCaptureMove, D, 7);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftForwardCaptureMove, D, 7);
   ASSERT_EQ(oneRightOneLeftForwardCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftForwardCaptureMoves.begin(),
                       oneRightOneLeftForwardCaptureMoves.end(),
@@ -765,7 +749,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   oneLeftOneRightBackCaptureMoveResult.addCapture(PieceLocation{C, 2});
   oneLeftOneRightBackCaptureMoveResult.addCapture(PieceLocation{C, 4});
   std::vector<Move> oneLeftOneRightBackCaptureMoves =
-      game.getPieceMoves(boardOneLeftOneRightBackCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneLeftOneRightBackCaptureMove, D, 1);
   ASSERT_EQ(oneLeftOneRightBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneLeftOneRightBackCaptureMoves.begin(),
                       oneLeftOneRightBackCaptureMoves.end(),
@@ -782,7 +766,7 @@ TEST(GameTest, blackQueenMovesWithCapture) {
   oneRightOneLeftBackCaptureMoveResult.addCapture(PieceLocation{E, 2});
   oneRightOneLeftBackCaptureMoveResult.addCapture(PieceLocation{E, 4});
   std::vector<Move> oneRightOneLeftBackCaptureMoves =
-      game.getPieceMoves(boardOneRightOneLeftBackCaptureMove, D, 1);
+      MoveGenerator::getPieceMoves(boardOneRightOneLeftBackCaptureMove, D, 1);
   ASSERT_EQ(oneRightOneLeftBackCaptureMoves.size(), 1);
   ASSERT_EQ(std::find(oneRightOneLeftBackCaptureMoves.begin(),
                       oneRightOneLeftBackCaptureMoves.end(),

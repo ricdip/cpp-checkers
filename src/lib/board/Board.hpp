@@ -1,5 +1,6 @@
 #pragma once
 #include "../tile/Tile.hpp"
+#include "../move/Move.hpp"
 #include <cstdint>
 
 #define COLS 8
@@ -17,13 +18,16 @@
 class Board {
 private:
   Tile tiles[ROWS][COLS];
+  bool turn;
   void initBoard();
 
 public:
   Board(bool = false);
   // (rows, colums) = (rank, file) = (1, A)
   bool checkPositionInBound(uint8_t, uint8_t) const;
-  uint8_t countPiecesByColor(bool color);
+  uint8_t countPiecesByColor(bool color) const;
+  std::vector<Move> getMoves() const;
+  bool getTurn() const;
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;

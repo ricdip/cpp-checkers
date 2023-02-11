@@ -6,11 +6,6 @@
 TEST(BoardTest, operators) {
   Board board = Board();
 
-  ASSERT_EQ(board(A, 1).repr(), ' ');
-  ASSERT_EQ(board(B, 1).repr(), 'p');
-  ASSERT_EQ(board(G, 7).repr(), ' ');
-  ASSERT_EQ(board(H, 7).repr(), 'P');
-
   EXPECT_NO_THROW(board(A, 1));
   EXPECT_NO_THROW(board(H, 8));
   EXPECT_THROW(board(A, 9), std::runtime_error);
@@ -19,6 +14,15 @@ TEST(BoardTest, operators) {
   EXPECT_THROW(board(9, 1), std::runtime_error);
   EXPECT_THROW(board(10, 10), std::runtime_error);
   EXPECT_THROW(board(0, 0), std::runtime_error);
+}
+
+TEST(BoardTest, representations) {
+  Board board = Board();
+
+  ASSERT_EQ(board(A, 1).repr(), ' ');
+  ASSERT_EQ(board(B, 1).repr(), 'p');
+  ASSERT_EQ(board(G, 7).repr(), ' ');
+  ASSERT_EQ(board(H, 7).repr(), 'P');
 }
 
 TEST(BoardTest, bounds) {
@@ -71,4 +75,9 @@ TEST(BoardTest, customBoards) {
 
   ASSERT_EQ(customBoard.countPiecesByColor(WHITE), 2);
   ASSERT_EQ(customBoard.countPiecesByColor(BLACK), 1);
+}
+
+// TODO: current board moves test
+TEST(BoardTest, boardMoves) {
+    ASSERT_EQ(1, 1);
 }

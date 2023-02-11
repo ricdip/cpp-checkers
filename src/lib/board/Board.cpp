@@ -1,9 +1,10 @@
 #include "Board.hpp"
 #include "../game/Game.hpp"
+#include "../move/generator/MoveGenerator.hpp"
 #include <cstdint>
 #include <string>
 
-Board::Board(bool emptyBoard) {
+Board::Board(bool emptyBoard) : turn(true) {
   if (!emptyBoard) {
     initBoard();
   }
@@ -48,7 +49,7 @@ bool Board::checkPositionInBound(uint8_t file, uint8_t rank) const {
            (rank - 1) < 0);
 }
 
-uint8_t Board::countPiecesByColor(bool color) {
+uint8_t Board::countPiecesByColor(bool color) const {
   uint8_t count = 0;
   for (uint8_t rank = 1; rank <= ROWS; rank++) {
     for (uint8_t file = 1; file <= COLS; file++) {
@@ -59,6 +60,23 @@ uint8_t Board::countPiecesByColor(bool color) {
     }
   }
   return count;
+}
+
+std::vector<Move> Board::getMoves() const {
+  std::vector<Move> legalMoves = std::vector<Move>();
+  for (uint8_t rank = 1; rank <= ROWS; rank++) {
+    for (uint8_t file = 1; file <= COLS; file++) {
+        if((!(*this)(file, rank).isEmpty()) && ((*this)(file, rank).getPiece().getColor() == turn)) {
+            std::vector<Move> newMoves = MoveGenerator::getPieceMoves(*this, file, rank);
+            legalMoves.insert(legalMoves.end(), newMoves.begin(), newMoves.end());
+        }
+    }
+  }
+  return legalMoves;
+}
+
+bool Board::getTurn() const {
+    return turn;
 }
 
 // (rows, colums) = (file, rank) = (A, 1)
