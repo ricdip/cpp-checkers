@@ -1,6 +1,6 @@
 #pragma once
-#include "../tile/Tile.hpp"
 #include "../move/Move.hpp"
+#include "../tile/Tile.hpp"
 #include <cstdint>
 
 #define COLS 8
@@ -29,6 +29,7 @@ public:
   uint8_t countPiecesByColor(bool color) const;
   std::vector<Move> getMoves() const;
   bool getTurn() const;
+  void makeMove(Move move);
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;

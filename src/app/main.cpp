@@ -1,26 +1,28 @@
 #include "../lib/game/Game.hpp"
 
 int main() {
-  Board board1 = Board();
-  std::cout << board1 << std::endl;
+  Board board1 = Board(true);
 
-  std::vector<Move> movesBoard1 = board1.getMoves();
-  for (auto it = movesBoard1.begin(); it != movesBoard1.end(); it++) {
-    std::cout << *it << " ";
+  std::cout << board1 << '\n';
+  std::cout << "turn: " << board1.getTurn() << '\n';
+
+  board1(D, 5) = new Pawn(WHITE);
+  board1(E, 4) = new Pawn(BLACK);
+
+  std::cout << board1 << '\n';
+  std::cout << "turn: " << board1.getTurn() << '\n';
+
+  std::vector<Move> moves = board1.getMoves();
+
+  for (auto it = moves.begin(); it != moves.end(); it++) {
+    std::cout << *it << ' ';
   }
-  std::cout << std::endl;
+  std::cout << '\n';
 
-  Board board2 = Board(true);
-  std::cout << board2 << "\n\n";
-  board2(G, 1) = new Queen(WHITE);
-  board2(D, 5) = new Pawn(BLACK);
-  std::cout << board2 << "\n\n";
+  board1.makeMove(Move("D5F3"));
 
-  std::vector<Move> movesBoard2 = board2.getMoves();
-  for (auto it = movesBoard2.begin(); it != movesBoard2.end(); it++) {
-    std::cout << *it << " ";
-  }
-  std::cout << std::endl;
+  std::cout << board1 << '\n';
+  std::cout << "turn: " << board1.getTurn() << '\n';
 
   return 0;
 }

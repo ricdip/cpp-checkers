@@ -1,7 +1,8 @@
 #include "MoveGenerator.hpp"
 
-std::vector<Move> MoveGenerator::getPieceMoves(const Board &board, const uint8_t file,
-                                      const uint8_t rank) {
+std::vector<Move> MoveGenerator::getPieceMoves(const Board &board,
+                                               const uint8_t file,
+                                               const uint8_t rank) {
   if (board(file, rank).isEmpty()) {
     return std::vector<Move>();
   }
@@ -21,9 +22,10 @@ std::vector<Move> MoveGenerator::getPieceMoves(const Board &board, const uint8_t
   }
 }
 
-std::vector<Move> MoveGenerator::getPawnMoves(const Board &board, const Pawn &pawn,
-                                     const uint8_t file,
-                                     const uint8_t rank) {
+std::vector<Move> MoveGenerator::getPawnMoves(const Board &board,
+                                              const Pawn &pawn,
+                                              const uint8_t file,
+                                              const uint8_t rank) {
   std::vector<Move> moves = std::vector<Move>();
 
   if (pawn.getColor() == WHITE) {
@@ -37,9 +39,10 @@ std::vector<Move> MoveGenerator::getPawnMoves(const Board &board, const Pawn &pa
   return moves;
 }
 
-std::vector<Move> MoveGenerator::getQueenMoves(const Board &board, const Queen &queen,
-                                      const uint8_t file,
-                                      const uint8_t rank) {
+std::vector<Move> MoveGenerator::getQueenMoves(const Board &board,
+                                               const Queen &queen,
+                                               const uint8_t file,
+                                               const uint8_t rank) {
   std::vector<Move> moves = std::vector<Move>();
 
   if (queen.getColor() == WHITE) {
@@ -55,9 +58,10 @@ std::vector<Move> MoveGenerator::getQueenMoves(const Board &board, const Queen &
   return moves;
 }
 
-void MoveGenerator::appendForwardMoves(const Board &board, const bool pieceColor,
-                              const uint8_t file, const uint8_t rank,
-                              std::vector<Move> &moves) {
+void MoveGenerator::appendForwardMoves(const Board &board,
+                                       const bool pieceColor,
+                                       const uint8_t file, const uint8_t rank,
+                                       std::vector<Move> &moves) {
   // move to up-left
   uint8_t upLeftFile = file - 1;
   uint8_t upLeftRank = rank - 1;
@@ -110,8 +114,8 @@ void MoveGenerator::appendForwardMoves(const Board &board, const bool pieceColor
 }
 
 void MoveGenerator::appendBackMoves(const Board &board, const bool pieceColor,
-                           const uint8_t file, const uint8_t rank,
-                           std::vector<Move> &moves) {
+                                    const uint8_t file, const uint8_t rank,
+                                    std::vector<Move> &moves) {
   // move to down-left
   uint8_t downLeftFile = file - 1;
   uint8_t downLeftRank = rank + 1;
@@ -169,8 +173,8 @@ void MoveGenerator::appendBackMoves(const Board &board, const bool pieceColor,
 
 PieceLocation
 MoveGenerator::forwardCaptures(const Board &board, const bool pieceColor,
-                      const uint8_t file, const uint8_t rank,
-                      std::vector<PieceLocation> &capturesLocations) {
+                               const uint8_t file, const uint8_t rank,
+                               std::vector<PieceLocation> &capturesLocations) {
   uint8_t upLeftFile = file - 1;
   uint8_t upLeftRank = rank - 1;
   uint8_t upRightFile = file + 1;
@@ -186,8 +190,9 @@ MoveGenerator::forwardCaptures(const Board &board, const bool pieceColor,
       board(upLeftAfterStepFile, upLeftAfterStepRank).isEmpty()) {
     // can capture up-left
     capturesLocations.push_back(PieceLocation{upLeftFile, upLeftRank});
-    return MoveGenerator::forwardCaptures(board, pieceColor, upLeftAfterStepFile,
-                                 upLeftAfterStepRank, capturesLocations);
+    return MoveGenerator::forwardCaptures(
+        board, pieceColor, upLeftAfterStepFile, upLeftAfterStepRank,
+        capturesLocations);
 
   } else if (board.checkPositionInBound(upRightFile, upRightRank) &&
              (!board(upRightFile, upRightRank).isEmpty()) &&
@@ -198,8 +203,9 @@ MoveGenerator::forwardCaptures(const Board &board, const bool pieceColor,
              board(upRightAfterStepFile, upRightAfterStepRank).isEmpty()) {
     // can capture up-right
     capturesLocations.push_back(PieceLocation{upRightFile, upRightRank});
-    return MoveGenerator::forwardCaptures(board, pieceColor, upRightAfterStepFile,
-                                 upRightAfterStepRank, capturesLocations);
+    return MoveGenerator::forwardCaptures(
+        board, pieceColor, upRightAfterStepFile, upRightAfterStepRank,
+        capturesLocations);
 
   } else {
     // no captures left
@@ -209,8 +215,8 @@ MoveGenerator::forwardCaptures(const Board &board, const bool pieceColor,
 
 PieceLocation
 MoveGenerator::backCaptures(const Board &board, const bool pieceColor,
-                   const uint8_t file, const uint8_t rank,
-                   std::vector<PieceLocation> &capturesLocations) {
+                            const uint8_t file, const uint8_t rank,
+                            std::vector<PieceLocation> &capturesLocations) {
   uint8_t downLeftFile = file - 1;
   uint8_t downLeftRank = rank + 1;
   uint8_t downRightFile = file + 1;
@@ -229,7 +235,8 @@ MoveGenerator::backCaptures(const Board &board, const bool pieceColor,
     // can capture down-left
     capturesLocations.push_back(PieceLocation{downLeftFile, downLeftRank});
     return MoveGenerator::backCaptures(board, pieceColor, downLeftAfterStepFile,
-                              downLeftAfterStepRank, capturesLocations);
+                                       downLeftAfterStepRank,
+                                       capturesLocations);
 
   } else if (board.checkPositionInBound(downRightFile, downRightRank) &&
              (!board(downRightFile, downRightRank).isEmpty()) &&
@@ -240,8 +247,9 @@ MoveGenerator::backCaptures(const Board &board, const bool pieceColor,
              board(downRightAfterStepFile, downRightAfterStepRank).isEmpty()) {
     // can capture down-right
     capturesLocations.push_back(PieceLocation{downRightFile, downRightRank});
-    return MoveGenerator::backCaptures(board, pieceColor, downRightAfterStepFile,
-                              downRightAfterStepRank, capturesLocations);
+    return MoveGenerator::backCaptures(
+        board, pieceColor, downRightAfterStepFile, downRightAfterStepRank,
+        capturesLocations);
 
   } else {
     // no captures left

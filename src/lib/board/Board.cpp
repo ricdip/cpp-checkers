@@ -2,6 +2,7 @@
 #include "../game/Game.hpp"
 #include "../move/generator/MoveGenerator.hpp"
 #include <cstdint>
+#include <stdexcept>
 #include <string>
 
 Board::Board(bool emptyBoard) : turn(true) {
@@ -72,17 +73,52 @@ std::vector<Move> Board::getMoves() const {
   std::vector<Move> legalMoves = std::vector<Move>();
   for (uint8_t rank = 1; rank <= ROWS; rank++) {
     for (uint8_t file = 1; file <= COLS; file++) {
-        if((!(*this)(file, rank).isEmpty()) && ((*this)(file, rank).getPiece().getColor() == turn)) {
-            std::vector<Move> newMoves = MoveGenerator::getPieceMoves(*this, file, rank);
-            legalMoves.insert(legalMoves.end(), newMoves.begin(), newMoves.end());
-        }
+      if ((!(*this)(file, rank).isEmpty()) &&
+          ((*this)(file, rank).getPiece().getColor() == turn)) {
+        std::vector<Move> newMoves =
+            MoveGenerator::getPieceMoves(*this, file, rank);
+        legalMoves.insert(legalMoves.end(), newMoves.begin(), newMoves.end());
+      }
     }
   }
   return legalMoves;
 }
 
-bool Board::getTurn() const {
-    return turn;
+bool Board::getTurn() const { return turn; }
+
+void Board::makeMove(Move move) {
+  std::vector<Move> legalMoves = getMoves();
+  std::vector<PieceLocation> captures = std::vector<PieceLocation>();
+
+  bool isLegal = false;
+  for (auto it = legalMoves.begin(); it != legalMoves.end(); it++) {
+    if (it->getOriginFile() == move.getOriginFile() &&
+        it->getOriginRank() == move.getOriginRank() &&
+        it->getDestinationFile() == move.getDestinationFile() &&
+        it->getDestinationRank() == move.getDestinationRank()) {
+      isLegal = true;
+      captures = it->getCaptures();
+      break;
+    }
+  }
+
+  if (!isLegal) {
+    std::string errString = "Attempt to make an illegal move: (";
+    errString += move.repr();
+    errString += ")";
+    throw std::runtime_error(errString);
+  }
+
+  (*this)(move.getDestinationFile(), move.getDestinationRank()) =
+      std::move((*this)(move.getOriginFile(), move.getOriginRank()));
+
+  (*this)(move.getOriginFile(), move.getOriginRank()).reset();
+
+  for (auto it = captures.begin(); it != captures.end(); it++) {
+    (*this)(it->file, it->rank).reset();
+  }
+
+  turn = !turn;
 }
 
 // (rows, colums) = (file, rank) = (A, 1)
