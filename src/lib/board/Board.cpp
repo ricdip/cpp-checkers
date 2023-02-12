@@ -20,35 +20,35 @@ Board::Board(bool turn, bool emptyBoard) : turn(turn) {
 void Board::initBoard() {
   // black
   // Board::operator() = new Pawn()
-  (*this)(B, 1) = new Pawn(BLACK);
-  (*this)(D, 1) = new Pawn(BLACK);
-  (*this)(F, 1) = new Pawn(BLACK);
-  (*this)(H, 1) = new Pawn(BLACK);
+  (*this)(A, 8) = new Pawn(BLACK);
+  (*this)(C, 8) = new Pawn(BLACK);
+  (*this)(E, 8) = new Pawn(BLACK);
+  (*this)(G, 8) = new Pawn(BLACK);
 
-  (*this)(A, 2) = new Pawn(BLACK);
-  (*this)(C, 2) = new Pawn(BLACK);
-  (*this)(E, 2) = new Pawn(BLACK);
-  (*this)(G, 2) = new Pawn(BLACK);
+  (*this)(B, 7) = new Pawn(BLACK);
+  (*this)(D, 7) = new Pawn(BLACK);
+  (*this)(F, 7) = new Pawn(BLACK);
+  (*this)(H, 7) = new Pawn(BLACK);
 
-  (*this)(B, 3) = new Pawn(BLACK);
-  (*this)(D, 3) = new Pawn(BLACK);
-  (*this)(F, 3) = new Pawn(BLACK);
-  (*this)(H, 3) = new Pawn(BLACK);
+  (*this)(A, 6) = new Pawn(BLACK);
+  (*this)(C, 6) = new Pawn(BLACK);
+  (*this)(E, 6) = new Pawn(BLACK);
+  (*this)(G, 6) = new Pawn(BLACK);
   // white
-  (*this)(A, 6) = new Pawn(WHITE);
-  (*this)(C, 6) = new Pawn(WHITE);
-  (*this)(E, 6) = new Pawn(WHITE);
-  (*this)(G, 6) = new Pawn(WHITE);
+  (*this)(B, 3) = new Pawn(WHITE);
+  (*this)(D, 3) = new Pawn(WHITE);
+  (*this)(F, 3) = new Pawn(WHITE);
+  (*this)(H, 3) = new Pawn(WHITE);
 
-  (*this)(B, 7) = new Pawn(WHITE);
-  (*this)(D, 7) = new Pawn(WHITE);
-  (*this)(F, 7) = new Pawn(WHITE);
-  (*this)(H, 7) = new Pawn(WHITE);
+  (*this)(A, 2) = new Pawn(WHITE);
+  (*this)(C, 2) = new Pawn(WHITE);
+  (*this)(E, 2) = new Pawn(WHITE);
+  (*this)(G, 2) = new Pawn(WHITE);
 
-  (*this)(A, 8) = new Pawn(WHITE);
-  (*this)(C, 8) = new Pawn(WHITE);
-  (*this)(E, 8) = new Pawn(WHITE);
-  (*this)(G, 8) = new Pawn(WHITE);
+  (*this)(B, 1) = new Pawn(WHITE);
+  (*this)(D, 1) = new Pawn(WHITE);
+  (*this)(F, 1) = new Pawn(WHITE);
+  (*this)(H, 1) = new Pawn(WHITE);
 }
 
 bool Board::checkPositionInBound(uint8_t file, uint8_t rank) const {
@@ -58,7 +58,7 @@ bool Board::checkPositionInBound(uint8_t file, uint8_t rank) const {
 
 uint8_t Board::countPiecesByColor(bool color) const {
   uint8_t count = 0;
-  for (uint8_t rank = 1; rank <= ROWS; rank++) {
+  for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if ((!(*this)(file, rank).isEmpty()) &&
           ((*this)(file, rank).getPiece().getColor() == color)) {
@@ -71,7 +71,7 @@ uint8_t Board::countPiecesByColor(bool color) const {
 
 std::vector<Move> Board::getMoves() const {
   std::vector<Move> legalMoves = std::vector<Move>();
-  for (uint8_t rank = 1; rank <= ROWS; rank++) {
+  for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if ((!(*this)(file, rank).isEmpty()) &&
           ((*this)(file, rank).getPiece().getColor() == turn)) {
@@ -131,7 +131,7 @@ Tile &Board::operator()(uint8_t file, uint8_t rank) {
     errString += ")";
     throw std::runtime_error(errString);
   }
-  return tiles[rank - 1][file - 1];
+  return tiles[8 - rank][file - 1];
 }
 
 const Tile &Board::operator()(uint8_t file, uint8_t rank) const {
@@ -143,7 +143,7 @@ const Tile &Board::operator()(uint8_t file, uint8_t rank) const {
     errString += ")";
     throw std::runtime_error(errString);
   }
-  return tiles[rank - 1][file - 1];
+  return tiles[8 - rank][file - 1];
 }
 
 std::ostream &operator<<(std::ostream &os, const Board &board) {
@@ -151,7 +151,7 @@ std::ostream &operator<<(std::ostream &os, const Board &board) {
      << "   "
      << "A B C D E F G H"
      << "\n\n";
-  for (uint8_t rank = 1; rank <= ROWS; rank++) {
+  for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if (file == 1) {
         os << +rank << "  ";

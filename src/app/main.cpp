@@ -6,8 +6,8 @@ int main() {
   std::cout << board1 << '\n';
   std::cout << "turn: " << board1.getTurn() << '\n';
 
-  board1(D, 5) = new Pawn(WHITE);
-  board1(E, 4) = new Pawn(BLACK);
+  board1(D, 4) = new Pawn(WHITE);
+  board1(E, 5) = new Pawn(BLACK);
 
   std::cout << board1 << '\n';
   std::cout << "turn: " << board1.getTurn() << '\n';
@@ -19,7 +19,7 @@ int main() {
   }
   std::cout << '\n';
 
-  board1.makeMove(Move("D5F3"));
+  board1.makeMove(Move("D4F6"));
 
   std::cout << board1 << '\n';
   std::cout << "turn: " << board1.getTurn() << '\n';
