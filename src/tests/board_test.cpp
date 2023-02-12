@@ -34,9 +34,9 @@ TEST(BoardTest, representations) {
   Board board = Board();
 
   ASSERT_EQ(board(A, 1).repr(), ' ');
-  ASSERT_EQ(board(B, 1).repr(), 'p');
+  ASSERT_EQ(board(B, 1).repr(), 'P');
   ASSERT_EQ(board(G, 7).repr(), ' ');
-  ASSERT_EQ(board(H, 7).repr(), 'P');
+  ASSERT_EQ(board(H, 7).repr(), 'p');
 }
 
 TEST(BoardTest, bounds) {
@@ -97,135 +97,135 @@ TEST(BoardTest, boardMoves) {
   std::vector<Move> board1Moves = board1.getMoves();
 
   ASSERT_EQ(board1Moves.size(), 7);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("A6B5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("B3A4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C6B5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("B3C4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C6D5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("D3C4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E6D5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("D3E4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E6F5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("F3E4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G6F5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("F3G4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G6H5")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("H3G4")) !=
                 board1Moves.end(),
             true);
 
   Board board2 = Board(BLACK, true);
-  board2(C, 6) = new Queen(BLACK);
-  board2(D, 5) = new Pawn(WHITE);
+  board2(C, 3) = new Queen(BLACK);
+  board2(D, 4) = new Pawn(WHITE);
 
   std::vector<Move> board2Moves = board2.getMoves();
 
-  Move moveCapturedPawn = Move("C6E4");
-  moveCapturedPawn.addCapture(PieceLocation{D, 5});
+  Move moveCapturedPawn = Move("C3E5");
+  moveCapturedPawn.addCapture(PieceLocation{D, 4});
 
   ASSERT_EQ(board2Moves.size(), 4);
-  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6B5")) !=
+  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C3B4")) !=
                 board2Moves.end(),
             true);
   ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(),
                       moveCapturedPawn) != board2Moves.end(),
             true);
-  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6B7")) !=
+  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C3B2")) !=
                 board2Moves.end(),
             true);
-  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C6D7")) !=
+  ASSERT_EQ(std::find(board2Moves.begin(), board2Moves.end(), Move("C3D2")) !=
                 board2Moves.end(),
             true);
 }
 
 TEST(BoardTest, makeIllegalMove) {
   Board board = Board();
-  EXPECT_THROW(board.makeMove(Move("G4E5")), std::runtime_error);
-  EXPECT_THROW(board.makeMove(Move("H7H6")), std::runtime_error);
-  EXPECT_THROW(board.makeMove(Move("G4E5")), std::runtime_error);
-  EXPECT_THROW(board.makeMove(Move("B34C")), std::runtime_error);
+  EXPECT_THROW(board.makeMove(Move("G5E4")), std::runtime_error);
+  EXPECT_THROW(board.makeMove(Move("H2H3")), std::runtime_error);
+  EXPECT_THROW(board.makeMove(Move("G5E4")), std::runtime_error);
+  EXPECT_THROW(board.makeMove(Move("B6C4")), std::runtime_error);
 }
 
 TEST(BoardTest, makeMovesNoCapture) {
   Board board = Board(true);
-  board(D, 5) = new Pawn(WHITE);
-  board(A, 5) = new Pawn(BLACK);
+  board(D, 4) = new Pawn(WHITE);
+  board(A, 4) = new Pawn(BLACK);
 
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_NO_THROW(board.makeMove(Move("D5E4")));
+  EXPECT_NO_THROW(board.makeMove(Move("D4E5")));
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_EQ(board(D, 5).isEmpty(), true);
-  EXPECT_EQ(board(E, 4).isEmpty(), false);
-  EXPECT_EQ(board(E, 4).getPiece().getColor(), WHITE);
-  EXPECT_EQ(board(E, 4).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(D, 4).isEmpty(), true);
+  EXPECT_EQ(board(E, 5).isEmpty(), false);
+  EXPECT_EQ(board(E, 5).getPiece().getColor(), WHITE);
+  EXPECT_EQ(board(E, 5).getPiece().getType(), PieceType::PAWN);
 
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_NO_THROW(board.makeMove(Move("A5B6")));
+  EXPECT_NO_THROW(board.makeMove(Move("A4B3")));
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_EQ(board(A, 5).isEmpty(), true);
-  EXPECT_EQ(board(B, 6).isEmpty(), false);
-  EXPECT_EQ(board(B, 6).getPiece().getColor(), BLACK);
-  EXPECT_EQ(board(B, 6).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(A, 4).isEmpty(), true);
+  EXPECT_EQ(board(B, 3).isEmpty(), false);
+  EXPECT_EQ(board(B, 3).getPiece().getColor(), BLACK);
+  EXPECT_EQ(board(B, 3).getPiece().getType(), PieceType::PAWN);
 }
 
 TEST(BoardTest, makeMovesOneCapture) {
   Board board = Board(true);
-  board(D, 5) = new Pawn(WHITE);
-  board(E, 4) = new Pawn(BLACK);
-  board(A, 5) = new Pawn(BLACK);
-  board(B, 6) = new Pawn(WHITE);
+  board(D, 4) = new Pawn(WHITE);
+  board(E, 5) = new Pawn(BLACK);
+  board(A, 4) = new Pawn(BLACK);
+  board(B, 3) = new Pawn(WHITE);
 
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_NO_THROW(board.makeMove(Move("D5F3")));
+  EXPECT_NO_THROW(board.makeMove(Move("D4F6")));
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_EQ(board(D, 5).isEmpty(), true);
-  EXPECT_EQ(board(E, 4).isEmpty(), true);
-  EXPECT_EQ(board(F, 3).isEmpty(), false);
-  EXPECT_EQ(board(F, 3).getPiece().getColor(), WHITE);
-  EXPECT_EQ(board(F, 3).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(D, 4).isEmpty(), true);
+  EXPECT_EQ(board(E, 5).isEmpty(), true);
+  EXPECT_EQ(board(F, 6).isEmpty(), false);
+  EXPECT_EQ(board(F, 6).getPiece().getColor(), WHITE);
+  EXPECT_EQ(board(F, 6).getPiece().getType(), PieceType::PAWN);
 
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_NO_THROW(board.makeMove(Move("A5C7")));
+  EXPECT_NO_THROW(board.makeMove(Move("A4C2")));
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_EQ(board(A, 5).isEmpty(), true);
-  EXPECT_EQ(board(B, 6).isEmpty(), true);
-  EXPECT_EQ(board(C, 7).isEmpty(), false);
-  EXPECT_EQ(board(C, 7).getPiece().getColor(), BLACK);
-  EXPECT_EQ(board(C, 7).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(A, 4).isEmpty(), true);
+  EXPECT_EQ(board(B, 3).isEmpty(), true);
+  EXPECT_EQ(board(C, 2).isEmpty(), false);
+  EXPECT_EQ(board(C, 2).getPiece().getColor(), BLACK);
+  EXPECT_EQ(board(C, 2).getPiece().getType(), PieceType::PAWN);
 }
 
 TEST(BoardTest, makeMovesMultiCaptures) {
   Board board = Board(true);
-  board(D, 5) = new Pawn(WHITE);
-  board(E, 4) = new Pawn(BLACK);
-  board(E, 2) = new Pawn(BLACK);
+  board(D, 4) = new Pawn(WHITE);
+  board(E, 5) = new Pawn(BLACK);
+  board(E, 7) = new Pawn(BLACK);
 
-  board(A, 4) = new Pawn(BLACK);
-  board(B, 5) = new Pawn(WHITE);
-  board(B, 7) = new Pawn(WHITE);
+  board(A, 5) = new Pawn(BLACK);
+  board(B, 4) = new Pawn(WHITE);
+  board(B, 2) = new Pawn(WHITE);
 
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_NO_THROW(board.makeMove(Move("D5D1")));
+  EXPECT_NO_THROW(board.makeMove(Move("D4D8")));
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_EQ(board(D, 5).isEmpty(), true);
-  EXPECT_EQ(board(E, 4).isEmpty(), true);
-  EXPECT_EQ(board(E, 2).isEmpty(), true);
-  EXPECT_EQ(board(D, 1).isEmpty(), false);
-  EXPECT_EQ(board(D, 1).getPiece().getColor(), WHITE);
-  EXPECT_EQ(board(D, 1).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(D, 4).isEmpty(), true);
+  EXPECT_EQ(board(E, 5).isEmpty(), true);
+  EXPECT_EQ(board(E, 7).isEmpty(), true);
+  EXPECT_EQ(board(D, 8).isEmpty(), false);
+  EXPECT_EQ(board(D, 8).getPiece().getColor(), WHITE);
+  EXPECT_EQ(board(D, 8).getPiece().getType(), PieceType::PAWN);
 
   EXPECT_EQ(board.getTurn(), BLACK);
-  EXPECT_NO_THROW(board.makeMove(Move("A4A8")));
+  EXPECT_NO_THROW(board.makeMove(Move("A5A1")));
   EXPECT_EQ(board.getTurn(), WHITE);
-  EXPECT_EQ(board(A, 4).isEmpty(), true);
-  EXPECT_EQ(board(B, 5).isEmpty(), true);
-  EXPECT_EQ(board(B, 7).isEmpty(), true);
-  EXPECT_EQ(board(A, 8).isEmpty(), false);
-  EXPECT_EQ(board(A, 8).getPiece().getColor(), BLACK);
-  EXPECT_EQ(board(A, 8).getPiece().getType(), PieceType::PAWN);
+  EXPECT_EQ(board(A, 5).isEmpty(), true);
+  EXPECT_EQ(board(B, 4).isEmpty(), true);
+  EXPECT_EQ(board(B, 2).isEmpty(), true);
+  EXPECT_EQ(board(A, 1).isEmpty(), false);
+  EXPECT_EQ(board(A, 1).getPiece().getColor(), BLACK);
+  EXPECT_EQ(board(A, 1).getPiece().getType(), PieceType::PAWN);
 }
