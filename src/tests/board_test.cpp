@@ -4,7 +4,7 @@
 // clang-format on
 #include "../lib/game/Game.hpp"
 
-TEST(BoardTest, baseMethods) {
+TEST(BoardTest, methods) {
   Board board1 = Board();
   Board board2 = Board(BLACK, true);
 
@@ -15,6 +15,34 @@ TEST(BoardTest, baseMethods) {
   ASSERT_EQ(board2.getTurn(), BLACK);
   ASSERT_EQ(board2.countPiecesByColor(WHITE), 0);
   ASSERT_EQ(board2.countPiecesByColor(BLACK), 0);
+
+  Board board3 = Board(true);
+  board3(D, 5) = new Pawn(WHITE);
+  board3(E, 6) = new Pawn(BLACK);
+  board3(B, 1) = new Pawn(WHITE);
+  board3(B, 2) = new Pawn(BLACK);
+
+  EXPECT_EQ(board3.getTurn(), WHITE);
+  Board board4 = *board3.clone();
+
+  ASSERT_EQ(board4.countPiecesByColor(WHITE), 2);
+  ASSERT_EQ(board4.countPiecesByColor(BLACK), 2);
+
+  EXPECT_EQ(board4.getTurn(), WHITE);
+  board4.makeMove(Move("D5F7"));
+  EXPECT_EQ(board4.getTurn(), BLACK);
+  EXPECT_EQ(board4(D, 5).isEmpty(), true);
+  EXPECT_EQ(board4(E, 6).isEmpty(), true);
+  EXPECT_EQ(board4(F, 7).isEmpty(), false);
+  EXPECT_EQ(board4(B, 1).isEmpty(), false);
+  EXPECT_EQ(board4(B, 2).isEmpty(), false);
+
+  EXPECT_EQ(board3.getTurn(), WHITE);
+  EXPECT_EQ(board3(D, 5).isEmpty(), false);
+  EXPECT_EQ(board3(E, 6).isEmpty(), false);
+  EXPECT_EQ(board3(F, 7).isEmpty(), true);
+  EXPECT_EQ(board3(B, 1).isEmpty(), false);
+  EXPECT_EQ(board3(B, 2).isEmpty(), false);
 }
 
 TEST(BoardTest, operators) {

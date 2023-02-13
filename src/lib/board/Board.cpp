@@ -2,6 +2,7 @@
 #include "../game/Game.hpp"
 #include "../move/generator/MoveGenerator.hpp"
 #include <cstdint>
+#include <memory>
 #include <stdexcept>
 #include <string>
 
@@ -15,6 +16,26 @@ Board::Board(bool turn, bool emptyBoard) : turn(turn) {
   if (!emptyBoard) {
     initBoard();
   }
+}
+
+std::shared_ptr<Board> Board::clone() const {
+  std::shared_ptr<Board> board = std::make_shared<Board>(turn, true);
+  for (uint8_t rank = ROWS; rank >= 1; rank--) {
+    for (uint8_t file = 1; file <= COLS; file++) {
+      if (!(*this)(file, rank).isEmpty()) {
+        Piece *p = &(*this)(file, rank).getPiece();
+        if (p->getType() == PieceType::PAWN) {
+          (*board)(file, rank) = new Pawn(p->getColor());
+        } else if (p->getType() == PieceType::QUEEN) {
+          (*board)(file, rank) = new Queen(p->getColor());
+        } else {
+          throw std::runtime_error(
+              "Error during board copy: illegal piece type");
+        }
+      }
+    }
+  }
+  return board;
 }
 
 void Board::initBoard() {

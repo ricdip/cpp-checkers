@@ -24,12 +24,12 @@ private:
 public:
   Board(bool = false);
   Board(bool, bool);
-  // (rows, colums) = (rank, file) = (1, A)
+  std::shared_ptr<Board> clone() const;
   bool checkPositionInBound(uint8_t, uint8_t) const;
-  uint8_t countPiecesByColor(bool color) const;
+  uint8_t countPiecesByColor(bool) const;
   std::vector<Move> getMoves() const;
   bool getTurn() const;
-  void makeMove(Move move);
+  void makeMove(Move);
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;
