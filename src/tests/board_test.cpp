@@ -1,8 +1,8 @@
 // clang-format off
 #include <gtest/gtest.h>
-#include <algorithm>
 // clang-format on
 #include "../lib/game/Game.hpp"
+#include <algorithm>
 
 TEST(BoardTest, methods) {
   Board board1 = Board();

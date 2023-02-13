@@ -71,12 +71,13 @@ run: ./build/src/app/cpp_checkers
 
 # run the tests
 .PHONY: run_tests
-run_tests: ./build/src/tests/piece_test ./build/src/tests/tile_test ./build/src/tests/board_test ./build/src/tests/move_test ./build/src/tests/move_generator_test
+run_tests: ./build/src/tests/piece_test ./build/src/tests/tile_test ./build/src/tests/board_test ./build/src/tests/move_test ./build/src/tests/move_generator_test ./build/src/tests/game_test
 	./build/src/tests/piece_test
 	./build/src/tests/tile_test
 	./build/src/tests/board_test
 	./build/src/tests/move_test
 	./build/src/tests/move_generator_test
+	./build/src/tests/game_test
 
 # dev rules
 # run dev mode (with entr)
