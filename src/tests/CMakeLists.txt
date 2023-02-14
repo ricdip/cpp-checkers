@@ -3,7 +3,7 @@ message("[log] CMake tests")
 set(_GTEST_LIBRARY_NAME "GTest::gtest_main")
 set(_SHARED_LIBRARY_NAME "checkers_shared")
 
-set(_TESTS "board_test" "game_test" "move_generator_test" "move_test" "piece_test" "tile_test")
+set(_TESTS "ai_test" "board_test" "game_test" "move_generator_test" "move_test" "piece_test" "tile_test")
 
 # find a package (usually provided by something external to the project), and load its package-specific details
 find_package(GTest REQUIRED)
