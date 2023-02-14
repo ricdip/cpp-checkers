@@ -142,17 +142,19 @@ void Board::makeMove(Move move) {
   turn = !turn;
 }
 
-// a player wins when the opponent cannot make a move (all opponent pieces are captured or the opponent is blocked from moving) -> game over = no current moves available for current player
-bool Board::isGameOver() const {
-    return getMoves().empty();
-}
+// a player wins when the opponent cannot make a move (all opponent pieces are
+// captured or the opponent is blocked from moving) -> game over = no current
+// moves available for current player
+bool Board::isGameOver() const { return getMoves().empty(); }
 
-// a player wins when the opponent cannot make a move (all opponent pieces are captured or the opponent is blocked from moving) -> in case of game over, we don't have moves available, so winner = previous player
+// a player wins when the opponent cannot make a move (all opponent pieces are
+// captured or the opponent is blocked from moving) -> in case of game over, we
+// don't have moves available, so winner = previous player
 bool Board::getWinner() const {
-    if(!isGameOver()) {
-        throw std::runtime_error("No winner");
-    }
-    return !turn;
+  if (!isGameOver()) {
+    throw std::runtime_error("No winner");
+  }
+  return !turn;
 }
 
 // (rows, colums) = (file, rank) = (A, 1)
