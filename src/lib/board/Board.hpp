@@ -30,6 +30,8 @@ public:
   std::vector<Move> getMoves() const;
   bool getTurn() const;
   void makeMove(Move);
+  bool isGameOver() const;
+  bool getWinner() const;
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;
