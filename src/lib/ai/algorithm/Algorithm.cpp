@@ -8,7 +8,7 @@ Algorithm::Algorithm(int32_t depth) : maxDepth(depth) {}
 int32_t Algorithm::minmaxAlphaBetaAux(const Board &board, int32_t depth,
                                       int32_t alpha, int32_t beta, bool turn) {
   if (depth == 0 || board.isGameOver()) {
-    return Heuristic::h(board);
+    return Heuristic::Htot(board);
   }
   if (turn) {
     // max player = WHITE
