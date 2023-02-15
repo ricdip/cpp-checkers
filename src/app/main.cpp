@@ -1,28 +1,19 @@
-#include "../lib/game/Game.hpp"
+#include "../lib/ai/algorithm/Algorithm.hpp"
+#include "../lib/board/Board.hpp"
 
 int main() {
-  Board board1 = Board(true);
+  Board state = Board();
+  Algorithm ai = Algorithm(3);
 
-  std::cout << board1 << '\n';
-  std::cout << "turn: " << board1.getTurn() << '\n';
+  std::cout << state << "\n\n";
 
-  board1(D, 4) = new Pawn(WHITE);
-  board1(E, 5) = new Pawn(BLACK);
-
-  std::cout << board1 << '\n';
-  std::cout << "turn: " << board1.getTurn() << '\n';
-
-  std::vector<Move> moves = board1.getMoves();
-
-  for (auto it = moves.begin(); it != moves.end(); it++) {
-    std::cout << *it << ' ';
+  while (!state.isGameOver()) {
+    state = ai.minmaxAlphaBeta(state, state.getTurn());
+    std::cout << state << "\n\n";
   }
-  std::cout << '\n';
 
-  board1.makeMove(Move("D4F6"));
-
-  std::cout << board1 << '\n';
-  std::cout << "turn: " << board1.getTurn() << '\n';
+  std::cout << "winner: " << ((state.getWinner()) ? "white" : "black")
+            << "\n\n";
 
   return 0;
 }
