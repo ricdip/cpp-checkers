@@ -135,6 +135,20 @@ void Board::makeMove(Move move) {
 
   (*this)(move.getOriginFile(), move.getOriginRank()).reset();
 
+  // pawn promotion
+  Piece &p =
+      (*this)(move.getDestinationFile(), move.getDestinationRank()).getPiece();
+  if (p.getType() == PieceType::PAWN && p.getColor() == WHITE &&
+      move.getDestinationRank() == 8) {
+    (*this)(move.getDestinationFile(), move.getDestinationRank()) =
+        new Queen(WHITE);
+  } else if (p.getType() == PieceType::PAWN && p.getColor() == BLACK &&
+             move.getDestinationRank() == 1) {
+    (*this)(move.getDestinationFile(), move.getDestinationRank()) =
+        new Queen(BLACK);
+  }
+
+  // delete captured pieces
   for (auto it = captures.begin(); it != captures.end(); it++) {
     (*this)(it->file, it->rank).reset();
   }

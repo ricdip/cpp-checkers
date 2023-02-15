@@ -100,9 +100,9 @@ TEST(BoardTest, representations) {
   Board board = Board();
 
   ASSERT_EQ(board(A, 1).repr(), ' ');
-  ASSERT_EQ(board(B, 1).repr(), 'P');
+  ASSERT_EQ(board(B, 1).repr(), 'w');
   ASSERT_EQ(board(G, 7).repr(), ' ');
-  ASSERT_EQ(board(H, 7).repr(), 'p');
+  ASSERT_EQ(board(H, 7).repr(), 'b');
 }
 
 TEST(BoardTest, bounds) {
@@ -265,7 +265,7 @@ TEST(BoardTest, makeMovesOneCapture) {
   EXPECT_EQ(board(C, 2).getPiece().getType(), PieceType::PAWN);
 }
 
-TEST(BoardTest, makeMovesMultiCaptures) {
+TEST(BoardTest, makeMoveMultiCaptures) {
   Board board = Board(true);
   board(D, 4) = new Pawn(WHITE);
   board(E, 5) = new Pawn(BLACK);
@@ -283,7 +283,8 @@ TEST(BoardTest, makeMovesMultiCaptures) {
   EXPECT_EQ(board(E, 7).isEmpty(), true);
   EXPECT_EQ(board(D, 8).isEmpty(), false);
   EXPECT_EQ(board(D, 8).getPiece().getColor(), WHITE);
-  EXPECT_EQ(board(D, 8).getPiece().getType(), PieceType::PAWN);
+  // pawn promotion: WHITE in rank 8
+  EXPECT_EQ(board(D, 8).getPiece().getType(), PieceType::QUEEN);
 
   EXPECT_EQ(board.getTurn(), BLACK);
   EXPECT_NO_THROW(board.makeMove(Move("A5A1")));
@@ -293,5 +294,26 @@ TEST(BoardTest, makeMovesMultiCaptures) {
   EXPECT_EQ(board(B, 2).isEmpty(), true);
   EXPECT_EQ(board(A, 1).isEmpty(), false);
   EXPECT_EQ(board(A, 1).getPiece().getColor(), BLACK);
-  EXPECT_EQ(board(A, 1).getPiece().getType(), PieceType::PAWN);
+  // pawn promotion: BLACK in rank 1
+  EXPECT_EQ(board(A, 1).getPiece().getType(), PieceType::QUEEN);
+}
+
+TEST(BoardTest, makeMovePawnPromotion) {
+  Board board = Board(WHITE, true);
+  board(D, 7) = new Pawn(WHITE);
+  board(B, 2) = new Pawn(BLACK);
+
+  board.makeMove(Move("D7C8"));
+
+  EXPECT_EQ(board(D, 7).isEmpty(), true);
+  EXPECT_EQ(board(C, 8).isEmpty(), false);
+  EXPECT_EQ(board(C, 8).getPiece().getColor(), WHITE);
+  EXPECT_EQ(board(C, 8).getPiece().getType(), PieceType::QUEEN);
+
+  board.makeMove(Move("B2A1"));
+
+  EXPECT_EQ(board(B, 2).isEmpty(), true);
+  EXPECT_EQ(board(A, 1).isEmpty(), false);
+  EXPECT_EQ(board(A, 1).getPiece().getColor(), BLACK);
+  EXPECT_EQ(board(A, 1).getPiece().getType(), PieceType::QUEEN);
 }

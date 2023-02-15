@@ -66,8 +66,8 @@ TEST(TileTest, operators) {
 
 TEST(TileTest, representations) {
   EXPECT_EQ(Tile().repr(), ' ');
-  EXPECT_EQ(Tile(new Pawn(WHITE)).repr(), 'P');
-  EXPECT_EQ(Tile(new Pawn(BLACK)).repr(), 'p');
-  EXPECT_EQ(Tile(new Queen(WHITE)).repr(), 'Q');
-  EXPECT_EQ(Tile(new Queen(BLACK)).repr(), 'q');
+  EXPECT_EQ(Tile(new Pawn(WHITE)).repr(), 'w');
+  EXPECT_EQ(Tile(new Pawn(BLACK)).repr(), 'b');
+  EXPECT_EQ(Tile(new Queen(WHITE)).repr(), 'W');
+  EXPECT_EQ(Tile(new Queen(BLACK)).repr(), 'B');
 }

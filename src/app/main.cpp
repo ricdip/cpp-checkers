@@ -5,15 +5,17 @@ int main() {
   Board state = Board();
   Algorithm ai = Algorithm(3);
 
-  std::cout << state << "\n\n";
+  std::cout << state << std::endl;
+  std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << "\n";
 
   while (!state.isGameOver()) {
     state = ai.minmaxAlphaBeta(state, state.getTurn());
-    std::cout << state << "\n\n";
+    std::cout << state << std::endl;
+    std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << "\n";
   }
 
   std::cout << "winner: " << ((state.getWinner()) ? "white" : "black")
-            << "\n\n";
+            << std::endl;
 
   return 0;
 }

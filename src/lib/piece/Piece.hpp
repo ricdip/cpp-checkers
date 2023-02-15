@@ -2,10 +2,10 @@
 #include "PieceType.hpp"
 #include <iostream>
 
-#define WPAWN 'P'
-#define BPAWN 'p'
-#define WQUEEN 'Q'
-#define BQUEEN 'q'
+#define WPAWN 'w'
+#define BPAWN 'b'
+#define WQUEEN 'W'
+#define BQUEEN 'B'
 
 class Piece {
 private:
