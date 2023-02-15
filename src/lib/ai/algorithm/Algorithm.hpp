@@ -3,10 +3,10 @@
 
 class Algorithm {
 private:
-  int32_t maxDepth;
-  int32_t minmaxAlphaBetaAux(const Board &, int32_t, int32_t, int32_t, bool);
+  uint32_t maxDepth;
+  int32_t minmaxAlphaBetaAux(const Board &, uint32_t, int32_t, int32_t, bool);
 
 public:
-  Algorithm(int32_t);
-  Board &minmaxAlphaBeta(const Board &, bool);
+  Algorithm(uint32_t);
+  Board minmaxAlphaBeta(const Board &, bool);
 };

@@ -2,10 +2,15 @@
 #include "../../game/Game.hpp"
 #include "../heuristic/Heuristic.hpp"
 
-Algorithm::Algorithm(int32_t depth) : maxDepth(depth) {}
+Algorithm::Algorithm(uint32_t depth) {
+  if (depth == 0) {
+    throw std::runtime_error("Illegal initial algorithm max depth");
+  }
+  maxDepth = depth;
+}
 
 // MinMax Alpha-Beta (fail-hard implementation)
-int32_t Algorithm::minmaxAlphaBetaAux(const Board &board, int32_t depth,
+int32_t Algorithm::minmaxAlphaBetaAux(const Board &board, uint32_t depth,
                                       int32_t alpha, int32_t beta, bool turn) {
   if (depth == 0 || board.isGameOver()) {
     return Heuristic::Htot(board);
@@ -41,7 +46,7 @@ int32_t Algorithm::minmaxAlphaBetaAux(const Board &board, int32_t depth,
   }
 }
 
-Board &Algorithm::minmaxAlphaBeta(const Board &board, bool turn) {
+Board Algorithm::minmaxAlphaBeta(const Board &board, bool turn) {
   // always first call with alpha = -infty, beta = +infty
   int32_t alpha = INT32_MIN;
   int32_t beta = INT32_MAX;
@@ -56,7 +61,7 @@ Board &Algorithm::minmaxAlphaBeta(const Board &board, bool turn) {
     for (auto child = children.begin(); child != children.end(); child++) {
       int32_t value =
           minmaxAlphaBetaAux(*child, maxDepth - 1, alpha, beta, BLACK);
-      if (bestStateValue > value) {
+      if (value > bestStateValue) {
         bestStateValue = value;
         bestState = *child;
       }
@@ -67,7 +72,7 @@ Board &Algorithm::minmaxAlphaBeta(const Board &board, bool turn) {
     for (auto child = children.begin(); child != children.end(); child++) {
       int32_t value =
           minmaxAlphaBetaAux(*child, maxDepth - 1, alpha, beta, WHITE);
-      if (bestStateValue < value) {
+      if (value < bestStateValue) {
         bestStateValue = value;
         bestState = *child;
       }
