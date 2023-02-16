@@ -3,15 +3,18 @@
 
 int main() {
   Board state = Board();
-  Algorithm ai = Algorithm(3);
+  uint32_t maxDepth = 4;
+  // uint32_t maxDepth = 5;
+  Algorithm ai = Algorithm(maxDepth);
 
-  std::cout << state << std::endl;
-  std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << "\n";
+  std::cout << state << "\n";
+  std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << std::endl;
 
   while (!state.isGameOver()) {
     state = ai.minmaxAlphaBeta(state, state.getTurn());
-    std::cout << state << std::endl;
-    std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << "\n";
+    std::cout << state << "\n";
+    std::cout << "turn: " << ((state.getTurn()) ? "white" : "black")
+              << std::endl;
   }
 
   std::cout << "winner: " << ((state.getWinner()) ? "white" : "black")
