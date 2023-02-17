@@ -1,6 +1,6 @@
 #pragma once
 #include "PieceType.hpp"
-#include <iostream>
+#include <sstream>
 
 #define WPAWN 'w'
 #define BPAWN 'b'
@@ -15,14 +15,10 @@ protected:
   PieceType type;
 
 public:
-  // constructor
   Piece(bool);
-  // getters
   bool getColor() const;
   PieceType getType() const;
-  // representation
   virtual char repr() const = 0;
-  // operator << overload
   friend std::ostream &operator<<(std::ostream &, const Piece &);
 };
 

@@ -190,12 +190,13 @@ void Board::makeMove(Move move) {
 
 // a player wins when the opponent cannot make a move (all opponent pieces are
 // captured or the opponent is blocked from moving) -> game over = no current
-// moves available for current player
+// moves available for current player or we have a threefold repetition
 bool Board::isGameOver() const { return getMoves().empty(); }
 
 // a player wins when the opponent cannot make a move (all opponent pieces are
-// captured or the opponent is blocked from moving) -> in case of game over, we
-// don't have moves available, so winner = previous player
+// captured or the opponent is blocked from moving) -> in case of game over
+// (with no threefold repetition), we don't have moves available, so winner =
+// previous player
 GameResult Board::getGameResult() const {
   // game not over case
   if (!isGameOver()) {
@@ -209,7 +210,7 @@ GameResult Board::getGameResult() const {
   return GameResult::winner(!turn);
 }
 
-// (rows, colums) = (file, rank) = (A, 1)
+// (file, rank) = (A, 1)
 Tile &Board::operator()(uint8_t file, uint8_t rank) {
   if (!checkPositionInBound(file, rank)) {
     std::string errString = "Out of range access on Board: (";
