@@ -1,5 +1,6 @@
 #include "../lib/ai/algorithm/Algorithm.hpp"
 #include "../lib/board/Board.hpp"
+#include <iostream>
 
 int main() {
   Board state;
