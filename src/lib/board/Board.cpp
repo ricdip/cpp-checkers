@@ -255,5 +255,10 @@ std::ostream &operator<<(std::ostream &os, const Board &board) {
   os << '\n'
      << "   "
      << "A B C D E F G H" << '\n';
+  int32_t madeMovesSize = board.madeMoves.size();
+  os << "last move: "
+     << ((madeMovesSize > 0) ? board.madeMoves[madeMovesSize - 1].repr()
+                             : "None")
+     << '\n';
   return os;
 }
