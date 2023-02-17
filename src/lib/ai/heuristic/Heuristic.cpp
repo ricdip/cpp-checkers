@@ -3,10 +3,15 @@
 #include "PieceValue.hpp"
 
 int32_t Heuristic::Htot(const Board &board) {
-  int32_t H1 = gameOverH(board);
-  int32_t H2 = boardPieceValuesH(board);
+  GameResult gameResult = board.getGameResult();
 
-  return (H1 != 0) ? H1 : H2;
+  if (gameResult == GameResult::gameNotOver()) {
+    // game not over
+    return boardPieceValuesH(board);
+  } else {
+    // game over
+    return gameOverH(gameResult);
+  }
 }
 
 int32_t Heuristic::boardPieceValuesH(const Board &board) {
@@ -30,19 +35,15 @@ int32_t Heuristic::boardPieceValuesH(const Board &board) {
   return count;
 }
 
-int32_t Heuristic::gameOverH(const Board &board) {
-  GameResult gameResult = board.getGameResult();
-  if (gameResult == GameResult::gameNotOver()) {
-    // game not over yet
-    return 0;
-  } else if (gameResult == GameResult::winner(WHITE)) {
+int32_t Heuristic::gameOverH(const GameResult &gameResult) {
+  if (gameResult == GameResult::winner(WHITE)) {
     // max player is the winner
     return INT32_MAX;
   } else if (gameResult == GameResult::winner(BLACK)) {
     // min player is the winner
     return INT32_MIN;
   } else {
-    // game draw
+    // game draw or game not over
     return 0;
   }
 }

@@ -91,7 +91,7 @@ void MoveGenerator::appendForwardMoves(const Board &board,
     std::vector<PieceLocation> captures = std::vector<PieceLocation>();
     PieceLocation finalLocation =
         MoveGenerator::forwardCaptures(board, pieceColor, file, rank, captures);
-    Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
+    Move move(file, rank, finalLocation.file, finalLocation.rank);
     move.addCaptures(captures);
     moves.push_back(move);
   }
@@ -107,7 +107,7 @@ void MoveGenerator::appendForwardMoves(const Board &board,
     std::vector<PieceLocation> captures = std::vector<PieceLocation>();
     PieceLocation finalLocation =
         MoveGenerator::forwardCaptures(board, pieceColor, file, rank, captures);
-    Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
+    Move move(file, rank, finalLocation.file, finalLocation.rank);
     move.addCaptures(captures);
     moves.push_back(move);
   }
@@ -147,7 +147,7 @@ void MoveGenerator::appendBackMoves(const Board &board, const bool pieceColor,
     std::vector<PieceLocation> captures = std::vector<PieceLocation>();
     PieceLocation finalLocation =
         MoveGenerator::backCaptures(board, pieceColor, file, rank, captures);
-    Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
+    Move move(file, rank, finalLocation.file, finalLocation.rank);
     move.addCaptures(captures);
     moves.push_back(move);
   }
@@ -165,7 +165,7 @@ void MoveGenerator::appendBackMoves(const Board &board, const bool pieceColor,
     std::vector<PieceLocation> captures = std::vector<PieceLocation>();
     PieceLocation finalLocation =
         MoveGenerator::backCaptures(board, pieceColor, file, rank, captures);
-    Move move = Move(file, rank, finalLocation.file, finalLocation.rank);
+    Move move(file, rank, finalLocation.file, finalLocation.rank);
     move.addCaptures(captures);
     moves.push_back(move);
   }

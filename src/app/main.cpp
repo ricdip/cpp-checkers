@@ -2,10 +2,10 @@
 #include "../lib/board/Board.hpp"
 
 int main() {
-  Board state = Board();
+  Board state;
   uint32_t maxDepth = 4;
   // uint32_t maxDepth = 6;
-  Algorithm ai = Algorithm(maxDepth);
+  Algorithm ai(maxDepth);
 
   std::cout << state << "\n";
   std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << std::endl;

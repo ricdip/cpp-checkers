@@ -4,19 +4,19 @@ GameResult::GameResult()
     : gameOn(false), winnerPlayer(false), threeFoldRepetitionDraw(false) {}
 
 GameResult GameResult::winner(bool winner) {
-  GameResult gameResult = GameResult();
+  GameResult gameResult;
   gameResult.winnerPlayer = winner;
   return gameResult;
 }
 
 GameResult GameResult::threeFoldRepetition() {
-  GameResult gameResult = GameResult();
+  GameResult gameResult;
   gameResult.threeFoldRepetitionDraw = true;
   return gameResult;
 }
 
 GameResult GameResult::gameNotOver() {
-  GameResult gameResult = GameResult();
+  GameResult gameResult;
   gameResult.gameOn = true;
   return gameResult;
 }
