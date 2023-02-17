@@ -341,3 +341,21 @@ TEST(BoardTest, makeMovePawnPromotion) {
   EXPECT_EQ(board(A, 1).getPiece().getColor(), BLACK);
   EXPECT_EQ(board(A, 1).getPiece().getType(), PieceType::QUEEN);
 }
+
+TEST(BoardTest, threeFoldRepetition) {
+  std::vector<Move> madeMoves = std::vector<Move>();
+  madeMoves.push_back(Move("D1E2"));
+  madeMoves.push_back(Move("A1B2"));
+  madeMoves.push_back(Move("D1E2"));
+  madeMoves.push_back(Move("D5F2"));
+  madeMoves.push_back(Move("D6F3"));
+
+  Board board = Board(WHITE, true, madeMoves);
+  board(D, 1) = new Pawn(WHITE);
+  board(D, 8) = new Pawn(BLACK);
+  board.makeMove(Move("D1E2"));
+
+  ASSERT_EQ(board.getMoves().size(), 0);
+  ASSERT_EQ(board.isGameOver(), true);
+  ASSERT_EQ(board.getGameResult(), GameResult::threeFoldRepetition());
+}

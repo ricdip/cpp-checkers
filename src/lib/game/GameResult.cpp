@@ -1,6 +1,5 @@
 #include "GameResult.hpp"
 
-// TODO: test
 GameResult::GameResult()
     : gameOn(false), winnerPlayer(false), threeFoldRepetitionDraw(false) {}
 
@@ -24,15 +23,15 @@ GameResult GameResult::gameNotOver() {
 
 std::string GameResult::repr() const {
   if (gameOn) {
-    return "Game not over yet";
+    return "game not over yet";
   } else if (threeFoldRepetitionDraw) {
-    return "Winner: None, draw caused by threefold repetition";
+    return "winner: None, draw caused by threefold repetition";
   }
 
   if (winnerPlayer) {
-    return "Winner: WHITE";
+    return "winner: WHITE";
   } else {
-    return "Winner: BLACK";
+    return "winner: BLACK";
   }
 }
 

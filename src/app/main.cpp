@@ -4,7 +4,7 @@
 int main() {
   Board state = Board();
   uint32_t maxDepth = 4;
-  // uint32_t maxDepth = 5;
+  // uint32_t maxDepth = 6;
   Algorithm ai = Algorithm(maxDepth);
 
   std::cout << state << "\n";

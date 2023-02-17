@@ -6,7 +6,6 @@
 #include <stdexcept>
 #include <string>
 
-// TODO: test threefold repetition
 Board::Board(bool emptyBoard) : turn(true), threeFoldRepetition(false) {
   if (!emptyBoard) {
     initBoard();
