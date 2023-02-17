@@ -83,6 +83,30 @@ TEST(BoardTest, methods) {
   ASSERT_EQ(blackWinnerBoardNoPieces.getWinner(), BLACK);
 }
 
+TEST(BoardTest, madeMoves) {
+  std::vector<Move> madeMoves = std::vector<Move>();
+  madeMoves.push_back(Move("A1B2"));
+  madeMoves.push_back(Move("D5F2"));
+
+  Board board = Board(WHITE, true, madeMoves);
+  board(D, 1) = new Pawn(WHITE);
+  board(D, 8) = new Pawn(BLACK);
+  board.makeMove(Move("D1E2"));
+  ASSERT_EQ(board.getMadeMoves().size(), 3);
+  ASSERT_EQ(board.getMadeMoves()[0], Move("A1B2"));
+  ASSERT_EQ(board.getMadeMoves()[1], Move("D5F2"));
+  ASSERT_EQ(board.getMadeMoves()[2], Move("D1E2"));
+
+  Board boardCloned = *board.clone();
+
+  boardCloned.makeMove(Move("D8E7"));
+  ASSERT_EQ(boardCloned.getMadeMoves().size(), 4);
+  ASSERT_EQ(boardCloned.getMadeMoves()[0], Move("A1B2"));
+  ASSERT_EQ(boardCloned.getMadeMoves()[1], Move("D5F2"));
+  ASSERT_EQ(boardCloned.getMadeMoves()[2], Move("D1E2"));
+  ASSERT_EQ(boardCloned.getMadeMoves()[3], Move("D8E7"));
+}
+
 TEST(BoardTest, operators) {
   Board board = Board();
 

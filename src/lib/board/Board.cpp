@@ -10,16 +10,25 @@ Board::Board(bool emptyBoard) : turn(true) {
   if (!emptyBoard) {
     initBoard();
   }
+  madeMoves = std::vector<Move>();
 }
 
 Board::Board(bool turn, bool emptyBoard) : turn(turn) {
   if (!emptyBoard) {
     initBoard();
   }
+  madeMoves = std::vector<Move>();
+}
+
+Board::Board(bool turn, bool emptyBoard, std::vector<Move> madeMoves)
+    : turn(turn), madeMoves(madeMoves) {
+  if (!emptyBoard) {
+    initBoard();
+  }
 }
 
 std::shared_ptr<Board> Board::clone() const {
-  std::shared_ptr<Board> board = std::make_shared<Board>(turn, true);
+  std::shared_ptr<Board> board = std::make_shared<Board>(turn, true, madeMoves);
   for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if (!(*this)(file, rank).isEmpty()) {
@@ -105,6 +114,8 @@ std::vector<Move> Board::getMoves() const {
   return legalMoves;
 }
 
+std::vector<Move> Board::getMadeMoves() const { return madeMoves; }
+
 bool Board::getTurn() const { return turn; }
 
 void Board::makeMove(Move move) {
@@ -154,6 +165,9 @@ void Board::makeMove(Move move) {
   }
 
   turn = !turn;
+
+  // save made move
+  madeMoves.push_back(move);
 }
 
 // a player wins when the opponent cannot make a move (all opponent pieces are

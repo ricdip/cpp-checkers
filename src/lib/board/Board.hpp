@@ -19,15 +19,18 @@ class Board {
 private:
   Tile tiles[ROWS][COLS];
   bool turn;
+  std::vector<Move> madeMoves;
   void initBoard();
 
 public:
   Board(bool = false);
   Board(bool, bool);
+  Board(bool, bool, std::vector<Move>);
   std::shared_ptr<Board> clone() const;
   bool checkPositionInBound(uint8_t, uint8_t) const;
   uint8_t countPiecesByColor(bool) const;
   std::vector<Move> getMoves() const;
+  std::vector<Move> getMadeMoves() const;
   bool getTurn() const;
   void makeMove(Move);
   bool isGameOver() const;
