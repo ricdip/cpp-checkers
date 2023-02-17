@@ -14,3 +14,12 @@ Board Human::getMove(const Board &board) {
 
   return newboard;
 }
+
+std::string Human::repr() const {
+  std::string reprStr = "Human(";
+  reprStr += "color: ";
+  reprStr += ((getColor()) ? "WHITE" : "BLACK");
+  reprStr += ")";
+
+  return reprStr;
+}
