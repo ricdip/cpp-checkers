@@ -7,14 +7,11 @@ int main() {
   // uint32_t maxDepth = 6;
   Algorithm ai(maxDepth);
 
-  std::cout << state << "\n";
-  std::cout << "turn: " << ((state.getTurn()) ? "white" : "black") << std::endl;
+  std::cout << state << std::endl;
 
   while (!state.isGameOver()) {
     state = ai.minmaxAlphaBeta(state, state.getTurn());
-    std::cout << state << "\n";
-    std::cout << "turn: " << ((state.getTurn()) ? "white" : "black")
-              << std::endl;
+    std::cout << state << std::endl;
   }
 
   std::cout << state.getGameResult() << std::endl;
