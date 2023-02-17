@@ -48,39 +48,39 @@ TEST(BoardTest, methods) {
   noGameOverBoard(D, 5) = new Pawn(WHITE);
   noGameOverBoard(C, 3) = new Pawn(BLACK);
   ASSERT_EQ(noGameOverBoard.isGameOver(), false);
-  EXPECT_THROW(noGameOverBoard.getWinner(), std::runtime_error);
+  ASSERT_EQ(noGameOverBoard.getGameResult(), GameResult::gameNotOver());
 
   Board whiteWinnerBoardNoPieces = Board(WHITE, true);
   whiteWinnerBoardNoPieces(A, 5) = new Pawn(WHITE);
   whiteWinnerBoardNoPieces(B, 6) = new Pawn(BLACK);
   whiteWinnerBoardNoPieces.makeMove(Move("A5C7"));
   ASSERT_EQ(whiteWinnerBoardNoPieces.isGameOver(), true);
-  EXPECT_NO_THROW(whiteWinnerBoardNoPieces.getWinner());
-  ASSERT_EQ(whiteWinnerBoardNoPieces.getWinner(), WHITE);
+  ASSERT_EQ(whiteWinnerBoardNoPieces.getGameResult(),
+            GameResult::winner(WHITE));
 
   Board whiteWinnerBoardBlocked = Board(WHITE, true);
   whiteWinnerBoardNoPieces(C, 6) = new Pawn(WHITE);
   whiteWinnerBoardNoPieces(B, 7) = new Pawn(WHITE);
   whiteWinnerBoardNoPieces(A, 8) = new Pawn(BLACK);
   ASSERT_EQ(whiteWinnerBoardNoPieces.isGameOver(), true);
-  EXPECT_NO_THROW(whiteWinnerBoardNoPieces.getWinner());
-  ASSERT_EQ(whiteWinnerBoardNoPieces.getWinner(), WHITE);
+  ASSERT_EQ(whiteWinnerBoardNoPieces.getGameResult(),
+            GameResult::winner(WHITE));
 
   Board blackWinnerBoardNoPieces = Board(BLACK, true);
   blackWinnerBoardNoPieces(A, 6) = new Pawn(BLACK);
   blackWinnerBoardNoPieces(B, 5) = new Pawn(WHITE);
   blackWinnerBoardNoPieces.makeMove(Move("A6C4"));
   ASSERT_EQ(blackWinnerBoardNoPieces.isGameOver(), true);
-  EXPECT_NO_THROW(blackWinnerBoardNoPieces.getWinner());
-  ASSERT_EQ(blackWinnerBoardNoPieces.getWinner(), BLACK);
+  ASSERT_EQ(blackWinnerBoardNoPieces.getGameResult(),
+            GameResult::winner(BLACK));
 
   Board blackWinnerBoardBlocked = Board(BLACK, true);
   blackWinnerBoardNoPieces(C, 3) = new Pawn(BLACK);
   blackWinnerBoardNoPieces(B, 2) = new Pawn(BLACK);
   blackWinnerBoardNoPieces(A, 1) = new Pawn(WHITE);
   ASSERT_EQ(blackWinnerBoardNoPieces.isGameOver(), true);
-  EXPECT_NO_THROW(blackWinnerBoardNoPieces.getWinner());
-  ASSERT_EQ(blackWinnerBoardNoPieces.getWinner(), BLACK);
+  ASSERT_EQ(blackWinnerBoardNoPieces.getGameResult(),
+            GameResult::winner(BLACK));
 }
 
 TEST(BoardTest, madeMoves) {

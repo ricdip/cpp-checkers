@@ -31,14 +31,18 @@ int32_t Heuristic::boardPieceValuesH(const Board &board) {
 }
 
 int32_t Heuristic::gameOverH(const Board &board) {
-  if (board.isGameOver()) {
-    if (board.getWinner() == WHITE) {
-      // max player is the winner
-      return INT32_MAX;
-    } else {
-      // min player is the winner
-      return INT32_MIN;
-    }
+  GameResult gameResult = board.getGameResult();
+  if (gameResult == GameResult::gameNotOver()) {
+    // game not over yet
+    return 0;
+  } else if (gameResult == GameResult::winner(WHITE)) {
+    // max player is the winner
+    return INT32_MAX;
+  } else if (gameResult == GameResult::winner(BLACK)) {
+    // min player is the winner
+    return INT32_MIN;
+  } else {
+    // game draw
+    return 0;
   }
-  return 0;
 }

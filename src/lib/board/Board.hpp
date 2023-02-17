@@ -1,4 +1,5 @@
 #pragma once
+#include "../game/GameResult.hpp"
 #include "../move/Move.hpp"
 #include "../tile/Tile.hpp"
 #include <cstdint>
@@ -20,6 +21,7 @@ private:
   Tile tiles[ROWS][COLS];
   bool turn;
   std::vector<Move> madeMoves;
+  bool threeFoldRepetition;
   void initBoard();
 
 public:
@@ -34,7 +36,7 @@ public:
   bool getTurn() const;
   void makeMove(Move);
   bool isGameOver() const;
-  bool getWinner() const;
+  GameResult getGameResult() const;
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;

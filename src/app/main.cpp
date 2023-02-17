@@ -17,8 +17,7 @@ int main() {
               << std::endl;
   }
 
-  std::cout << "winner: " << ((state.getWinner()) ? "white" : "black")
-            << std::endl;
+  std::cout << state.getGameResult() << std::endl;
 
   return 0;
 }

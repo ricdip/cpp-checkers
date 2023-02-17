@@ -6,14 +6,16 @@
 #include <stdexcept>
 #include <string>
 
-Board::Board(bool emptyBoard) : turn(true) {
+// TODO: test threefold repetition
+Board::Board(bool emptyBoard) : turn(true), threeFoldRepetition(false) {
   if (!emptyBoard) {
     initBoard();
   }
   madeMoves = std::vector<Move>();
 }
 
-Board::Board(bool turn, bool emptyBoard) : turn(turn) {
+Board::Board(bool turn, bool emptyBoard)
+    : turn(turn), threeFoldRepetition(false) {
   if (!emptyBoard) {
     initBoard();
   }
@@ -21,7 +23,7 @@ Board::Board(bool turn, bool emptyBoard) : turn(turn) {
 }
 
 Board::Board(bool turn, bool emptyBoard, std::vector<Move> madeMoves)
-    : turn(turn), madeMoves(madeMoves) {
+    : turn(turn), madeMoves(madeMoves), threeFoldRepetition(false) {
   if (!emptyBoard) {
     initBoard();
   }
@@ -29,6 +31,7 @@ Board::Board(bool turn, bool emptyBoard, std::vector<Move> madeMoves)
 
 std::shared_ptr<Board> Board::clone() const {
   std::shared_ptr<Board> board = std::make_shared<Board>(turn, true, madeMoves);
+  board->threeFoldRepetition = threeFoldRepetition;
   for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if (!(*this)(file, rank).isEmpty()) {
@@ -101,6 +104,11 @@ uint8_t Board::countPiecesByColor(bool color) const {
 
 std::vector<Move> Board::getMoves() const {
   std::vector<Move> legalMoves = std::vector<Move>();
+
+  if (threeFoldRepetition) {
+    return legalMoves;
+  }
+
   for (uint8_t rank = ROWS; rank >= 1; rank--) {
     for (uint8_t file = 1; file <= COLS; file++) {
       if ((!(*this)(file, rank).isEmpty()) &&
@@ -168,6 +176,17 @@ void Board::makeMove(Move move) {
 
   // save made move
   madeMoves.push_back(move);
+
+  // check threefold repetition
+  uint32_t count = 0;
+  for (auto it = madeMoves.begin(); it != madeMoves.end(); it++) {
+    if (move == *it) {
+      count++;
+    }
+  }
+  if (count >= 3) {
+    threeFoldRepetition = true;
+  }
 }
 
 // a player wins when the opponent cannot make a move (all opponent pieces are
@@ -178,11 +197,17 @@ bool Board::isGameOver() const { return getMoves().empty(); }
 // a player wins when the opponent cannot make a move (all opponent pieces are
 // captured or the opponent is blocked from moving) -> in case of game over, we
 // don't have moves available, so winner = previous player
-bool Board::getWinner() const {
+GameResult Board::getGameResult() const {
+  // game not over case
   if (!isGameOver()) {
-    throw std::runtime_error("No winner");
+    return GameResult::gameNotOver();
   }
-  return !turn;
+  // draw case
+  if (threeFoldRepetition) {
+    return GameResult::threeFoldRepetition();
+  }
+  // winner case
+  return GameResult::winner(!turn);
 }
 
 // (rows, colums) = (file, rank) = (A, 1)
