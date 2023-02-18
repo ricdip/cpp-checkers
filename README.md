@@ -97,5 +97,5 @@ In the following table we show the results of the non-interactive execution mode
 | 3     | Winner: black              | 0.186 sec       |
 | 4     | Draw: threefold repetition | 0.760 sec       |
 | 5     | Draw: threefold repetition | 3.852 sec       |
-| 6     | Draw, threefold repetition | 49.009 sec      |
-| 7     | Draw, threefold repetition | 4 min 28.19 sec |
+| 6     | Draw: threefold repetition | 49.009 sec      |
+| 7     | Draw: threefold repetition | 4 min 28.19 sec |

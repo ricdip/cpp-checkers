@@ -88,5 +88,5 @@ clang-format-generate:
 format:
 	fd --type f -e cpp -e hpp | xargs clang-format -i
 
-.PHONY: all # [MAIN] Clean, build release version and run program
+.PHONY: all # [MAIN] Clean, build release version and run app
 all: clean build_release run
