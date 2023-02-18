@@ -60,3 +60,18 @@ user@host:~$ make run
 ```bash
 user@host:~$ make run_tests
 ```
+
+### Display help message
+```bash
+user@host:~$ make help
+```
+
+## App example
+The app asks to choose between 2 execution modes:
+- `AIvsAI`: both `WHITE` and `BLACK` players are controlled by the AI
+- `HumanvsAI`: player `WHITE` is controller by the human player, player `BLACK` is controlled by the AI
+
+For each mode, the app asks the **max depth** value for the AI to limit the depth of the game tree.
+
+## Execution constraints
+- Using the release build of the application, it is recommended to choose a max depth between [1, 6] inclusive. For higher max depths the app may be really slow
