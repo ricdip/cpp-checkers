@@ -25,7 +25,7 @@ void AivsAI(uint32_t maxDepthAI1, uint32_t maxDepthAI2) {
 
   std::cout << white << '\n';
   std::cout << black << '\n';
-  std::cout << "start in 5 seconds..." << '\n';
+  std::cout << '\n' << "start in 5 seconds..." << '\n';
 
   std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
@@ -38,14 +38,14 @@ void HumanvsAI(uint32_t maxDepthAI) {
 
   std::cout << white << '\n';
   std::cout << black << '\n';
-  std::cout << "start in 5 seconds..." << '\n';
+  std::cout << '\n' << "start in 5 seconds..." << '\n';
 
   std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   run(white, black);
 }
 
-int main() {
+void interactive_exec() {
   int32_t choice;
   std::cout << '\n';
   std::cout << "AIvsAI or HumanvsAI? [1,2]: ";
@@ -71,6 +71,20 @@ int main() {
 
   } else {
     throw std::runtime_error("Illegal choice");
+  }
+}
+
+void non_interactive_exec(int32_t maxDepthAI1, int32_t maxDepthAI2) {
+  AI white(WHITE, maxDepthAI1);
+  AI black(BLACK, maxDepthAI2);
+  run(white, black);
+}
+
+int main(int argc, char *argv[]) {
+  if (argc == 3) {
+    non_interactive_exec(atoi(argv[1]), atoi(argv[2]));
+  } else {
+    interactive_exec();
   }
 
   return 0;

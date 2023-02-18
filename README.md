@@ -21,6 +21,11 @@ All source code is located in the `src` directory:
 
 The shared library, the app and the tests are built using CMake with multiple CMakeLists files.
 
+## Dependencies
+- **Make**: Makefile execution
+- **CMake**: building process
+- **GoogleTest**: testing for checkers library
+
 ## Build release version
 The release build uses optimization flags that decrease the execution time:
 - used GNU compiler flags: `-Wall -Wextra -pedantic -Werror -O2`
@@ -67,11 +72,30 @@ user@host:~$ make help
 ```
 
 ## App example
-The app asks to choose between 2 execution modes:
+A very simple app that uses the checkers shared library.
+
+The app has two execution modes:
+- interactive execution mode: `./cpp_checkers`
+- non-interactive execution mode: `./cpp_checkers <max_depth_AI_1> <max_depth_AI_2>`
+
+In interactive execution mode, the app asks to choose between two game modes:
 - `AIvsAI`: both `WHITE` and `BLACK` players are controlled by the AI
 - `HumanvsAI`: player `WHITE` is controller by the human player, player `BLACK` is controlled by the AI
+For each game mode, the app asks the **max depth** value for the AI to limit the depth of the game tree.
 
-For each mode, the app asks the **max depth** value for the AI to limit the depth of the game tree.
+In non-interactive execution mode, the app executes the `AIvsAI` game mode with the max depths passed as inputs.
 
-## Execution constraints
-- Using the release build of the application, it is recommended to choose a max depth between [1, 6] inclusive. For higher max depths the app may be really slow
+## Performance
+Using the release build of the application, it is recommended to choose a max depth between [1, 7] inclusive. For higher max depths the app may be really slow.
+
+In the following table we show the results of the non-interactive execution mode of the app example with the same max depth for both AIs:
+
+| Depth | Game result                | Time            |
+| :---: | -------------------------  | :-------------: |
+| 1     | Draw: threefold repetition | 0.010 sec       |
+| 2     | Winner: black              | 0.036 sec       |
+| 3     | Winner: black              | 0.186 sec       |
+| 4     | Draw: threefold repetition | 0.760 sec       |
+| 5     | Draw: threefold repetition | 3.852 sec       |
+| 6     | Draw, threefold repetition | 49.009 sec      |
+| 7     | Draw, threefold repetition | 4 min 28.19 sec |
