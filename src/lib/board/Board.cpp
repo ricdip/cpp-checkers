@@ -52,35 +52,35 @@ std::shared_ptr<Board> Board::clone() const {
 void Board::initBoard() {
   // black
   // Board::operator() = new Pawn()
-  (*this)(A, 8) = new Pawn(BLACK);
-  (*this)(C, 8) = new Pawn(BLACK);
-  (*this)(E, 8) = new Pawn(BLACK);
-  (*this)(G, 8) = new Pawn(BLACK);
+  (*this)(B, 8) = new Pawn(BLACK);
+  (*this)(D, 8) = new Pawn(BLACK);
+  (*this)(F, 8) = new Pawn(BLACK);
+  (*this)(H, 8) = new Pawn(BLACK);
 
-  (*this)(B, 7) = new Pawn(BLACK);
-  (*this)(D, 7) = new Pawn(BLACK);
-  (*this)(F, 7) = new Pawn(BLACK);
-  (*this)(H, 7) = new Pawn(BLACK);
+  (*this)(A, 7) = new Pawn(BLACK);
+  (*this)(C, 7) = new Pawn(BLACK);
+  (*this)(E, 7) = new Pawn(BLACK);
+  (*this)(G, 7) = new Pawn(BLACK);
 
-  (*this)(A, 6) = new Pawn(BLACK);
-  (*this)(C, 6) = new Pawn(BLACK);
-  (*this)(E, 6) = new Pawn(BLACK);
-  (*this)(G, 6) = new Pawn(BLACK);
+  (*this)(B, 6) = new Pawn(BLACK);
+  (*this)(D, 6) = new Pawn(BLACK);
+  (*this)(F, 6) = new Pawn(BLACK);
+  (*this)(H, 6) = new Pawn(BLACK);
   // white
-  (*this)(B, 3) = new Pawn(WHITE);
-  (*this)(D, 3) = new Pawn(WHITE);
-  (*this)(F, 3) = new Pawn(WHITE);
-  (*this)(H, 3) = new Pawn(WHITE);
+  (*this)(A, 3) = new Pawn(WHITE);
+  (*this)(C, 3) = new Pawn(WHITE);
+  (*this)(E, 3) = new Pawn(WHITE);
+  (*this)(G, 3) = new Pawn(WHITE);
 
-  (*this)(A, 2) = new Pawn(WHITE);
-  (*this)(C, 2) = new Pawn(WHITE);
-  (*this)(E, 2) = new Pawn(WHITE);
-  (*this)(G, 2) = new Pawn(WHITE);
+  (*this)(B, 2) = new Pawn(WHITE);
+  (*this)(D, 2) = new Pawn(WHITE);
+  (*this)(F, 2) = new Pawn(WHITE);
+  (*this)(H, 2) = new Pawn(WHITE);
 
-  (*this)(B, 1) = new Pawn(WHITE);
-  (*this)(D, 1) = new Pawn(WHITE);
-  (*this)(F, 1) = new Pawn(WHITE);
-  (*this)(H, 1) = new Pawn(WHITE);
+  (*this)(A, 1) = new Pawn(WHITE);
+  (*this)(C, 1) = new Pawn(WHITE);
+  (*this)(E, 1) = new Pawn(WHITE);
+  (*this)(G, 1) = new Pawn(WHITE);
 }
 
 bool Board::checkPositionInBound(uint8_t file, uint8_t rank) const {
@@ -208,6 +208,22 @@ GameResult Board::getGameResult() const {
   }
   // winner case
   return GameResult::winner(!turn);
+}
+
+std::string Board::repr() const {
+  std::string boardStr = "";
+  for (uint8_t rank = ROWS; rank >= 1; rank--) {
+    for (uint8_t file = 1; file <= COLS; file++) {
+      if ((*this)(file, rank).isEmpty()) {
+        boardStr += ".";
+      } else {
+        boardStr += (*this)(file, rank).getPiece().repr();
+      }
+    }
+  }
+  boardStr += '/';
+  boardStr += ((turn) ? "W" : "B");
+  return boardStr;
 }
 
 // (file, rank) = (A, 1)

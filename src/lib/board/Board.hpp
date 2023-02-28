@@ -37,6 +37,7 @@ public:
   void makeMove(Move);
   bool isGameOver() const;
   GameResult getGameResult() const;
+  std::string repr() const;
 
   Tile &operator()(uint8_t, uint8_t);
   const Tile &operator()(uint8_t, uint8_t) const;

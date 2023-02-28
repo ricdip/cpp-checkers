@@ -83,6 +83,26 @@ TEST(BoardTest, methods) {
             GameResult::winner(BLACK));
 }
 
+TEST(BoardTest, reprMethod) {
+  Board board1 = Board();
+  Board board2 = Board(WHITE, true);
+  board2(A, 5) = new Pawn(WHITE);
+  board2(B, 5) = new Queen(WHITE);
+  Board board3 = Board(BLACK, true);
+  board3(A, 5) = new Pawn(BLACK);
+  board3(B, 5) = new Queen(BLACK);
+
+  ASSERT_STREQ(
+      board1.repr().c_str(),
+      ".b.b.b.bb.b.b.b..b.b.b.b................w.w.w.w..w.w.w.ww.w.w.w./W");
+  ASSERT_STREQ(
+      board2.repr().c_str(),
+      "........................wW....................................../W");
+  ASSERT_STREQ(
+      board3.repr().c_str(),
+      "........................bB....................................../B");
+}
+
 TEST(BoardTest, madeMoves) {
   std::vector<Move> madeMoves = std::vector<Move>();
   madeMoves.push_back(Move("A1B2"));
@@ -123,10 +143,10 @@ TEST(BoardTest, operators) {
 TEST(BoardTest, representations) {
   Board board = Board();
 
-  ASSERT_EQ(board(A, 1).repr(), ' ');
-  ASSERT_EQ(board(B, 1).repr(), 'w');
-  ASSERT_EQ(board(G, 7).repr(), ' ');
-  ASSERT_EQ(board(H, 7).repr(), 'b');
+  ASSERT_EQ(board(A, 1).repr(), 'w');
+  ASSERT_EQ(board(B, 1).repr(), ' ');
+  ASSERT_EQ(board(G, 7).repr(), 'b');
+  ASSERT_EQ(board(H, 7).repr(), ' ');
 }
 
 TEST(BoardTest, bounds) {
@@ -187,25 +207,25 @@ TEST(BoardTest, boardMoves) {
   std::vector<Move> board1Moves = board1.getMoves();
 
   ASSERT_EQ(board1Moves.size(), 7);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("B3A4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("A3B4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("B3C4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C3B4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("D3C4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("C3D4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("D3E4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E3D4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("F3E4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("E3F4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("F3G4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G3F4")) !=
                 board1Moves.end(),
             true);
-  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("H3G4")) !=
+  ASSERT_EQ(std::find(board1Moves.begin(), board1Moves.end(), Move("G3H4")) !=
                 board1Moves.end(),
             true);
 
